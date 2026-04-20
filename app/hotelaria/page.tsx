@@ -159,7 +159,6 @@ export default function HotelariaPage() {
                 origem="hotelaria"
                 produto="hotelaria"
                 ctaText="→ Quero meu Diagnóstico"
-                ctaText="→ Quero meu Diagnóstico"
                 showFields={['nome', 'email', 'telefone', 'empresa']}
               />
               <p className={styles.formNote}>

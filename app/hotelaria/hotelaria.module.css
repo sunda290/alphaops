@@ -1,0 +1,50 @@
+.hero { min-height: 100vh; background: #0F1F3D; padding-top: 80px; display: flex; align-items: center; position: relative; overflow: hidden; }
+.heroInner { position: relative; z-index: 2; display: grid; grid-template-columns: 1fr 360px; gap: 60px; align-items: center; padding: 80px 40px; max-width: 1100px; margin: 0 auto; }
+.eyebrow { display: inline-block; font-family: 'Share Tech Mono', monospace; font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: #C9A84C; border: 1px solid rgba(201,168,76,0.3); padding: 6px 14px; margin-bottom: 28px; }
+.heroH1 { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: clamp(44px, 5.5vw, 72px); line-height: 0.92; text-transform: uppercase; color: #EDE9E0; margin-bottom: 16px; }
+.heroH1 em { font-style: normal; color: #C9A84C; display: block; }
+.heroSub { font-family: 'Share Tech Mono', monospace; font-size: 10px; letter-spacing: 0.12em; color: #7A7670; text-transform: uppercase; margin-bottom: 24px; }
+.heroDesc { font-size: 14px; color: #B5B2A8; line-height: 1.75; max-width: 480px; margin-bottom: 36px; }
+.btnPrimary { display: inline-block; font-family: 'Share Tech Mono', monospace; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: #0F1F3D; background: #C9A84C; padding: 16px 28px; text-decoration: none; transition: background 0.2s; }
+.btnPrimary:hover { background: #E0C06A; }
+.heroNote { margin-top: 14px; font-family: 'Share Tech Mono', monospace; font-size: 9px; color: #3D6B2E; letter-spacing: 0.1em; text-transform: uppercase; }
+.heroStats { display: flex; flex-direction: column; gap: 16px; }
+.statBox { background: rgba(255,255,255,0.04); border: 1px solid rgba(212,206,196,0.12); border-left: 3px solid #C9A84C; padding: 20px 24px; }
+.statNum { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 36px; letter-spacing: -0.02em; color: #C9A84C; line-height: 1; margin-bottom: 4px; }
+.statLabel { font-size: 11px; color: #EDE9E0; font-weight: 500; text-transform: uppercase; letter-spacing: 0.04em; }
+.statSub { font-size: 11px; color: #7A7670; margin-top: 2px; }
+.section { padding: 120px 40px; background: #000; }
+.sectionLight { background: #0d0d0c; border-top: 1px solid #222220; border-bottom: 1px solid #222220; }
+.sectionH2 { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: clamp(34px, 4vw, 52px); text-transform: uppercase; line-height: 0.95; color: #ede9e0; margin-bottom: 48px; }
+.sectionH2 em { font-style: normal; color: #C9A84C; }
+.problemGrid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: #222220; max-width: 1100px; margin: 0 auto; }
+.problemCard { background: #131312; padding: 36px; border-top: 3px solid #222220; transition: border-color 0.3s; }
+.problemCard:hover { border-color: #C9A84C; }
+.problemNum { font-family: 'Share Tech Mono', monospace; font-size: 10px; color: #C9A84C; letter-spacing: 0.12em; margin-bottom: 12px; }
+.problemTitle { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 18px; text-transform: uppercase; letter-spacing: 0.04em; color: #ede9e0; margin-bottom: 10px; line-height: 1.2; }
+.problemDesc { font-size: 13px; color: #8a8880; line-height: 1.65; }
+.pilaresGrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: #222220; max-width: 1100px; margin: 0 auto; }
+.pilarCard { background: #131312; padding: 40px 32px; display: flex; flex-direction: column; transition: background 0.3s; }
+.pilarCard:hover { background: #0d0d0c; }
+.pilarNum { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 52px; line-height: 1; color: #2a2a27; margin-bottom: 8px; }
+.pilarTitle { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 20px; text-transform: uppercase; letter-spacing: 0.04em; color: #ede9e0; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid #222220; }
+.pilarSection { margin-bottom: 16px; flex: 1; }
+.pilarLabel { display: block; font-family: 'Share Tech Mono', monospace; font-size: 8px; letter-spacing: 0.15em; color: #C9A84C; text-transform: uppercase; margin-bottom: 6px; }
+.pilarSection p { font-size: 13px; color: #8a8880; line-height: 1.65; }
+.pilarRemote { font-family: 'Share Tech Mono', monospace; font-size: 9px; letter-spacing: 0.1em; color: #5a9e42; text-transform: uppercase; margin-top: 16px; }
+.investGrid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; max-width: 1100px; margin: 0 auto; }
+.investDesc { font-size: 14px; color: #8a8880; line-height: 1.75; margin-bottom: 40px; }
+.cronograma { display: flex; flex-direction: column; }
+.cronoItem { display: grid; grid-template-columns: 80px 90px 1fr; gap: 16px; padding: 14px 0; border-bottom: 1px solid #222220; align-items: center; }
+.cronoFase { font-family: 'Share Tech Mono', monospace; font-size: 9px; letter-spacing: 0.1em; color: #C9A84C; text-transform: uppercase; }
+.cronoPrazo { font-family: 'Barlow Condensed', sans-serif; font-size: 16px; font-weight: 700; color: #ede9e0; }
+.cronoTitulo { font-size: 13px; color: #8a8880; }
+.formBox { background: #131312; border: 1px solid #2a2a27; padding: 36px; }
+.formBoxTitle { font-family: 'Share Tech Mono', monospace; font-size: 10px; letter-spacing: 0.12em; color: #C9A84C; padding-bottom: 16px; border-bottom: 1px solid #222220; margin-bottom: 24px; }
+.formNote { margin-top: 14px; font-family: 'Share Tech Mono', monospace; font-size: 9px; color: #8a8880; letter-spacing: 0.08em; text-align: center; line-height: 1.8; }
+.footer { padding: 40px; border-top: 1px solid #222220; background: #050505; display: flex; justify-content: space-between; align-items: center; }
+.footerLogo { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 16px; letter-spacing: 0.08em; text-transform: uppercase; color: #ede9e0; }
+.footerLogo span { color: #C9A84C; }
+.footerBy { font-family: 'Share Tech Mono', monospace; font-size: 10px; color: #8a8880; letter-spacing: 0.1em; }
+.footerCopy { font-family: 'Share Tech Mono', monospace; font-size: 10px; color: #222220; text-transform: uppercase; }
+@media(max-width:900px){ .heroInner{ grid-template-columns:1fr; } .heroStats{ display:none; } .problemGrid{ grid-template-columns:1fr; } .pilaresGrid{ grid-template-columns:1fr; } .investGrid{ grid-template-columns:1fr; } .footer{ flex-direction:column; gap:16px; text-align:center; } }
