@@ -99,3 +99,12 @@
 .footerLinks a:hover{color:var(--white);}
 .footerCopy{font-family:var(--font-mono);font-size:10px;color:var(--border2);text-transform:uppercase;letter-spacing:0.08em;}
 @media(max-width:900px){.heroInner{grid-template-columns:1fr;}.heroPanel{display:none;}.dorGrid{grid-template-columns:1fr;gap:48px;}.calcBox{position:static;}.produtosGrid{grid-template-columns:1fr;}.metodoGrid{grid-template-columns:1fr;}.briefingBox{position:static;}.footer .container{flex-direction:column;gap:20px;text-align:center;}.footerLinks{flex-wrap:wrap;justify-content:center;}}
+.heroTag .mono{font-size:13px;}
+.sectionLabel .mono{font-size:13px;}
+.statCard .mono{font-size:13px;}
+.statLabel{font-size:14px;}
+.credentialText{font-size:14px;}
+.credentialText strong{font-size:14px;}
+.dorItem p{font-size:15px;}
+.calcTitle{font-family:var(--font-mono);font-size:12px;letter-spacing:0.12em;color:var(--green-lt);padding-bottom:16px;border-bottom:1px solid var(--border);margin-bottom:8px;}
+.calcRow span{font-size:15px;}
