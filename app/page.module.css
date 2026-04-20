@@ -16,7 +16,7 @@
 .btnSecondary:hover{color:var(--white);}
 .credential{display:flex;align-items:center;gap:14px;padding-top:28px;border-top:1px solid var(--border);}
 .credentialBadge{width:40px;height:40px;border:1px solid var(--green);display:flex;align-items:center;justify-content:center;color:var(--green-lt);font-size:18px;flex-shrink:0;}
-.credentialText{font-size:18px;color:var(--smoke);line-height:1.5;}
+.credentialText{font-size:12px;color:var(--smoke);line-height:1.5;}
 .credentialText strong{color:var(--white);font-weight:500;display:block;}
 .heroPanel{display:flex;flex-direction:column;gap:20px;}
 .statCard{background:var(--card);border:1px solid var(--border);padding:24px;position:relative;transition:border-color 0.3s;}
@@ -41,9 +41,9 @@
 .dorIcon{width:34px;height:34px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-family:var(--font-mono);font-size:10px;color:var(--green-lt);flex-shrink:0;margin-top:2px;transition:border-color 0.2s,color 0.2s;}
 .dorItem:hover .dorIcon{border-color:var(--gold);color:var(--gold);}
 .dorItem strong{display:block;font-family:var(--font-cond);font-weight:700;font-size:16px;text-transform:uppercase;letter-spacing:0.03em;color:var(--white);margin-bottom:4px;}
-.dorItem p{font-size:19px;color:var(--smoke);line-height:1.6;}
+.dorItem p{font-size:13px;color:var(--smoke);line-height:1.6;}
 .calcBox{background:var(--card);border:1px solid var(--border2);padding:36px;position:sticky;top:100px;}
-.calcTitle{font-family:var(--font-mono);font-size:16px;letter-spacing:0.12em;color:var(--green-lt);padding-bottom:16px;border-bottom:1px solid var(--border);margin-bottom:8px;}
+.calcTitle{font-family:var(--font-mono);font-size:10px;letter-spacing:0.12em;color:var(--green-lt);padding-bottom:16px;border-bottom:1px solid var(--border);margin-bottom:8px;}
 .calcRow{display:flex;justify-content:space-between;align-items:baseline;padding:12px 0;border-bottom:1px solid var(--border);font-size:13px;color:var(--smoke);}
 .calcRow:last-child{border-bottom:none;}
 .calcVal{font-family:var(--font-cond);font-weight:700;font-size:20px;color:var(--white);}
@@ -53,7 +53,7 @@
 .produtoCard{background:var(--card);padding:40px 32px;display:flex;flex-direction:column;transition:background 0.3s;}
 .produtoCard:hover{background:var(--dark);}
 .produtoFeatured{background:var(--black);outline:1px solid var(--gold);outline-offset:-1px;z-index:1;}
-.produtoNum{font-family:var(--font-mono);font-size:16px;letter-spacing:0.12em;color:var(--green-lt);margin-bottom:20px;}
+.produtoNum{font-family:var(--font-mono);font-size:10px;letter-spacing:0.12em;color:var(--green-lt);margin-bottom:20px;}
 .produtoTag{display:inline-block;font-family:var(--font-mono);font-size:9px;letter-spacing:0.1em;text-transform:uppercase;padding:4px 10px;border:1px solid var(--border);color:var(--smoke);margin-bottom:18px;align-self:flex-start;}
 .produtoFeatured .produtoTag{border-color:var(--gold);color:var(--gold);}
 .produtoTitle{font-family:var(--font-cond);font-weight:800;font-size:22px;text-transform:uppercase;letter-spacing:0.02em;line-height:1.1;color:var(--white);margin-bottom:12px;}
@@ -79,7 +79,7 @@
 .stepDur{font-family:var(--font-mono);font-size:9px;letter-spacing:0.1em;color:var(--green-lt);margin-top:8px;display:flex;align-items:center;gap:8px;}
 .stepDur::before{content:'';display:block;width:14px;height:1px;background:var(--green-lt);}
 .briefingBox{background:var(--card);border:1px solid var(--border2);padding:36px;position:sticky;top:100px;}
-.briefingTitle{font-family:var(--font-mono);font-size:16px;letter-spacing:0.12em;color:var(--green-lt);padding-bottom:16px;border-bottom:1px solid var(--border);margin-bottom:16px;}
+.briefingTitle{font-family:var(--font-mono);font-size:10px;letter-spacing:0.12em;color:var(--green-lt);padding-bottom:16px;border-bottom:1px solid var(--border);margin-bottom:16px;}
 .briefingRow{display:flex;justify-content:space-between;align-items:baseline;padding:10px 0;border-bottom:1px solid var(--border);font-size:12px;}
 .briefingKey{color:var(--smoke);font-family:var(--font-mono);font-size:10px;}
 .briefingVal{color:var(--white);font-family:var(--font-cond);font-weight:600;font-size:14px;}
