@@ -36,7 +36,7 @@ export default function AlphaOpsPage() {
                 <strong>saia da execução e assuma o comando.</strong>
               </p>
               <div className={styles.heroBtns}>
-                <a href="#pricing" className={styles.btnOps}>
+                <a href="https://cal.com/andre-oliveira-s290/diagnostico-estrategico" className={styles.btnOps}>
                   → Contratar o AlphaOps
                 </a>
                 <a href="#solution" className={styles.btnGhost}>

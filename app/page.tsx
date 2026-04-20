@@ -25,7 +25,7 @@ export default function Home() {
                 Construo <strong>sistemas sob medida</strong> que eliminam o trabalho manual do seu negócio — usando IA e desenvolvimento Full Stack — para que você pare de operar e comece a crescer.
               </p>
               <div className={styles.heroBtns}>
-                <a href="#metodo" className={styles.btnPrimary}>Quero meu Diagnóstico →</a>
+                <a href="https://cal.com/andre-oliveira-s290/diagnostico-estrategico" className={styles.btnPrimary}>Quero meu Diagnóstico →</a>
                 <a href="#produtos" className={styles.btnSecondary}>Ver soluções</a>
               </div>
               <div className={styles.credential}>
@@ -178,7 +178,7 @@ export default function Home() {
           <div className={styles.sectionLabel} style={{justifyContent:'center'}}><span className="mono">Decisão</span></div>
           <h2 className={styles.ctaH2}>Sua operação ainda vai<br /><em>depender de você amanhã?</em></h2>
           <p className={styles.ctaSub}>Cada semana sem o sistema certo é mais horas dentro da operação — e menos tempo construindo o negócio que você quer ter.</p>
-          <a href="#metodo" className={styles.btnPrimary}>Quero meu Diagnóstico Gratuito</a>
+          <a href="https://cal.com/andre-oliveira-s290/diagnostico-estrategico" className={styles.btnPrimary}>Quero meu Diagnóstico Gratuito</a>
           <div className={styles.ctaNote}>Sem enrolação · 60 minutos · Resultado concreto · Vagas limitadas</div>
         </div>
       </section>
@@ -191,7 +191,7 @@ export default function Home() {
             <a href="/alphaops">AlphaOps</a>
             <a href="/hotelaria">Hotelaria</a>
             <a href="#produtos">E-book</a>
-            <a href="#metodo">Diagnóstico</a>
+            <a href="https://cal.com/andre-oliveira-s290/diagnostico-estrategico">Diagnóstico</a>
           </div>
           <div className={styles.footerCopy}>© 2026 André Oliveira</div>
         </div>

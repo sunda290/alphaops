@@ -52,7 +52,7 @@ export default function HotelariaPage() {
                 O custo disso aparece na avaliação do hóspede, na diária que não sobe
                 e na equipe que não escala.
               </p>
-              <a href="#investimento" className={styles.btnPrimary}>
+              <a href="https://cal.com/andre-oliveira-s290/diagnostico-estrategico" className={styles.btnPrimary}>
                 → Quero meu Diagnóstico Gratuito
               </a>
               <p className={styles.heroNote}>

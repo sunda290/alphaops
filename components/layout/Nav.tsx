@@ -23,7 +23,7 @@ export default function Nav({ variant = 'default' }: { variant?: string }) {
       <Link href="/" style={{ fontFamily: 'Barlow Condensed, sans-serif', fontWeight: 800, fontSize: 18, letterSpacing: '0.08em', textTransform: 'uppercase', color: '#ede9e0' }}>
         André<span style={{ color: '#c9a84c' }}>.</span>Oliveira
       </Link>
-      <Link href="/#metodo" style={{ fontFamily: 'Barlow Condensed, sans-serif', fontWeight: 700, fontSize: 13, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#000', background: '#c9a84c', padding: '10px 22px' }}>
+      <Link href="https://cal.com/andre-oliveira-s290/diagnostico-estrategico" style={{ fontFamily: 'Barlow Condensed, sans-serif', fontWeight: 700, fontSize: 13, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#000', background: '#c9a84c', padding: '10px 22px' }}>
         Diagnóstico Gratuito
       </Link>
     </nav>
