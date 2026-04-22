@@ -5,34 +5,50 @@
 .heroH1 { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: clamp(64px, 9vw, 120px); line-height: 0.88; letter-spacing: 0.04em; text-transform: uppercase; margin-bottom: 12px; display: flex; flex-direction: column; }
 .alpha { color: #7bc85a; }
 .ops { color: #ede9e0; }
-.heroTagline { font-family: 'Share Tech Mono', monospace; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: #5a9e42; margin-bottom: 28px; }
+.heroTagline { font-family: 'Share Tech Mono', monospace; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: #5a9e42; margin-bottom: 28px; }
 .cursor { display: inline-block; width: 7px; height: 13px; background: #7bc85a; margin-left: 4px; animation: blink 1s infinite; vertical-align: middle; }
 .heroDesc { font-size: 15px; color: #b5b2a8; line-height: 1.75; max-width: 520px; margin-bottom: 40px; }
 .heroBtns { display: flex; align-items: center; gap: 24px; flex-wrap: wrap; }
-.btnOps { font-family: 'Share Tech Mono', monospace; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: #000; background: #7bc85a; padding: 16px 28px; text-decoration: none; transition: background 0.2s; }
+.btnOps { font-family: 'Share Tech Mono', monospace; font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase; color: #000; background: #7bc85a; padding: 16px 28px; text-decoration: none; transition: background 0.2s; }
 .btnOps:hover { background: #c9a84c; }
-.btnGhost { font-family: 'Share Tech Mono', monospace; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: #8a8880; text-decoration: none; border-bottom: 1px solid #2a2a27; padding-bottom: 2px; }
+.btnGhost { font-family: 'Share Tech Mono', monospace; font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase; color: #8a8880; text-decoration: none; border-bottom: 1px solid #2a2a27; padding-bottom: 2px; }
 .section { padding: 120px 40px; max-width: 1100px; margin: 0 auto; }
-.sectionH2 { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: clamp(36px, 4.5vw, 56px); text-transform: uppercase; line-height: 0.95; margin: 16px 0 48px; }
+.sectionLight { background: #0d0d0c; }
+.sectionH2 { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: clamp(32px, 4.5vw, 56px); text-transform: uppercase; line-height: 0.95; margin: 16px 0 48px; }
 .sectionH2 em { font-style: normal; color: #7bc85a; }
 .featuresGrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: #222220; }
 .featureCard { background: #131312; padding: 36px 28px; transition: background 0.3s; }
 .featureCard:hover { background: #0d0d0c; }
-.featureCode { font-family: 'Share Tech Mono', monospace; font-size: 10px; color: #5a9e42; letter-spacing: 0.1em; margin-bottom: 16px; }
-.featureTitle { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 18px; text-transform: uppercase; color: #ede9e0; margin-bottom: 10px; }
-.featureDesc { font-size: 13px; color: #8a8880; line-height: 1.65; }
+.featureCode { font-family: 'Share Tech Mono', monospace; font-size: 11px; color: #5a9e42; letter-spacing: 0.1em; margin-bottom: 16px; }
+.featureTitle { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 20px; text-transform: uppercase; color: #ede9e0; margin-bottom: 10px; }
+.featureDesc { font-size: 15px; color: #8a8880; line-height: 1.65; }
 .pricingGrid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: #222220; max-width: 860px; margin-top: 48px; }
 .pricingCard { background: #131312; padding: 44px 36px; position: relative; }
 .pricingMain { background: #050505; outline: 1px solid #7bc85a; outline-offset: -1px; }
-.pricingBadge { position: absolute; top: 16px; right: 16px; font-family: 'Share Tech Mono', monospace; font-size: 9px; letter-spacing: 0.1em; color: #000; background: #7bc85a; padding: 4px 10px; }
-.pricingTier { font-family: 'Share Tech Mono', monospace; font-size: 9px; color: #8a8880; letter-spacing: 0.1em; margin-bottom: 12px; }
+.pricingBadge { position: absolute; top: 16px; right: 16px; font-family: 'Share Tech Mono', monospace; font-size: 11px; letter-spacing: 0.1em; color: #000; background: #7bc85a; padding: 4px 10px; }
+.pricingTier { font-family: 'Share Tech Mono', monospace; font-size: 11px; color: #8a8880; letter-spacing: 0.1em; margin-bottom: 12px; }
 .pricingName { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 28px; text-transform: uppercase; letter-spacing: 0.04em; color: #ede9e0; margin-bottom: 10px; }
-.pricingDesc { font-size: 13px; color: #8a8880; line-height: 1.6; margin-bottom: 20px; }
+.pricingDesc { font-size: 15px; color: #8a8880; line-height: 1.6; margin-bottom: 20px; }
 .pricingPrice { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 44px; letter-spacing: -0.02em; color: #ede9e0; line-height: 1; margin-bottom: 4px; }
 .pricingMain .pricingPrice { color: #7bc85a; }
-.pricingPeriod { font-family: 'Share Tech Mono', monospace; font-size: 9px; color: #8a8880; letter-spacing: 0.08em; margin-bottom: 24px; }
+.pricingPeriod { font-family: 'Share Tech Mono', monospace; font-size: 11px; color: #8a8880; letter-spacing: 0.08em; margin-bottom: 24px; }
+.terminal { background: #0a0a0a; border: 1px solid #222220; font-family: 'Share Tech Mono', monospace; }
+.termBar { display: flex; align-items: center; gap: 8px; padding: 12px 16px; background: #131312; border-bottom: 1px solid #222220; }
+.dot { width: 10px; height: 10px; border-radius: 50%; }
+.dotR { background: #c03030; }
+.dotY { background: #c9a84c; }
+.dotG { background: #5a9e42; }
+.termTitle { font-size: 11px; color: #5a9e42; letter-spacing: 0.08em; margin-left: 8px; }
+.termBody { padding: 24px; display: flex; flex-direction: column; gap: 8px; }
+.termLine { display: flex; align-items: baseline; gap: 10px; font-size: 13px; color: #8a8880; line-height: 1.5; }
+.termGap { margin-top: 8px; }
+.termPrompt { color: #7bc85a; flex-shrink: 0; }
+.termOut { width: 12px; flex-shrink: 0; }
+.termText { color: #8a8880; }
+.termRed { color: #c03030; }
+.termGreen { color: #7bc85a; }
 .footer { padding: 40px; border-top: 1px solid #222220; display: flex; justify-content: space-between; align-items: center; }
 .footerLogo { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 18px; letter-spacing: 0.1em; color: #ede9e0; }
-.footerBy { font-family: 'Share Tech Mono', monospace; font-size: 10px; color: #8a8880; letter-spacing: 0.1em; }
-.footerCopy { font-family: 'Share Tech Mono', monospace; font-size: 10px; color: #222220; text-transform: uppercase; letter-spacing: 0.08em; }
+.footerBy { font-family: 'Share Tech Mono', monospace; font-size: 11px; color: #8a8880; letter-spacing: 0.1em; }
+.footerCopy { font-family: 'Share Tech Mono', monospace; font-size: 11px; color: #222220; text-transform: uppercase; letter-spacing: 0.08em; }
 @media(max-width:900px){ .featuresGrid{ grid-template-columns:1fr; } .pricingGrid{ grid-template-columns:1fr; } .footer{ flex-direction:column; gap:16px; text-align:center; } }
