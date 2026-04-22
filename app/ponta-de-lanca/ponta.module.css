@@ -26,3 +26,13 @@
 .btnCopy:hover{background:var(--green-br);}
 .blocoContent{padding:20px;font-size:14px;line-height:1.75;color:var(--mist);white-space:pre-wrap;}
 @media(max-width:600px){.inputArea{flex-direction:column;}.btnGerar{width:100%;}}
+@media (max-width: 768px) {
+  .main { padding: 24px 16px 80px; }
+  .title { font-size: clamp(28px, 8vw, 44px); }
+  .sub { font-size: 14px; }
+  .inputArea { flex-direction: column; }
+  .input { font-size: 14px; padding: 16px; }
+  .btnGerar { width: 100%; padding: 16px; font-size: 13px; }
+  .blocoContent { font-size: 14px; line-height: 1.75; padding: 16px; }
+  .blocoTitle { font-size: 11px; }
+}

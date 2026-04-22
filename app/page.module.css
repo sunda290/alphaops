@@ -99,3 +99,42 @@
 .footerLinks a:hover{color:var(--white);}
 .footerCopy{font-family:var(--font-mono);font-size:11px;color:var(--border2);text-transform:uppercase;letter-spacing:0.08em;}
 @media(max-width:900px){.heroInner{grid-template-columns:1fr;}.heroPanel{display:none;}.dorGrid{grid-template-columns:1fr;gap:48px;}.calcBox{position:static;}.produtosGrid{grid-template-columns:1fr;}.metodoGrid{grid-template-columns:1fr;}.briefingBox{position:static;}.footer .container{flex-direction:column;gap:20px;text-align:center;}.footerLinks{flex-wrap:wrap;justify-content:center;}}
+
+/* ── MOBILE LANDING ── */
+@media (max-width: 768px) {
+  .heroInner { grid-template-columns: 1fr; padding: 100px 0 48px; gap: 32px; }
+  .heroPanel { display: none; }
+  .heroH1 { font-size: clamp(40px, 11vw, 64px); margin-bottom: 20px; }
+  .heroSub { font-size: 15px; }
+  .heroBtns { flex-direction: column; gap: 16px; }
+  .btnPrimary { width: 100%; text-align: center; justify-content: center; padding: 18px 24px; font-size: 15px; }
+  .btnSecondary { font-size: 14px; }
+  .credential { flex-direction: column; gap: 10px; }
+  .credentialText { font-size: 14px; }
+  .section { padding: 72px 0; }
+  .sectionH2 { font-size: clamp(28px, 8vw, 44px); margin-bottom: 32px; }
+  .sectionLead { font-size: 15px; }
+  .dorGrid { grid-template-columns: 1fr; gap: 40px; }
+  .calcBox { position: static; }
+  .calcRow { font-size: 14px; }
+  .calcVal { font-size: 18px; }
+  .calcRowHighlight .calcVal { font-size: 24px; }
+  .produtosGrid { grid-template-columns: 1fr; }
+  .produtoCard { padding: 28px 20px; }
+  .produtoTitle { font-size: 20px; }
+  .produtoDesc { font-size: 14px; }
+  .produtoFeatures li { font-size: 13px; }
+  .produtoPrice { font-size: 32px; }
+  .metodoGrid { grid-template-columns: 1fr; gap: 48px; }
+  .briefingBox { position: static; padding: 24px 20px; }
+  .briefingKey { font-size: 11px; }
+  .briefingVal { font-size: 14px; }
+  .step { grid-template-columns: 40px 1fr; gap: 14px; }
+  .stepNum { font-size: 40px; }
+  .stepTitle { font-size: 17px; }
+  .stepDesc { font-size: 14px; }
+  .ctaH2 { font-size: clamp(28px, 8vw, 44px); }
+  .ctaSub { font-size: 14px; }
+  .footer .container { flex-direction: column; gap: 16px; text-align: center; }
+  .footerLinks { flex-wrap: wrap; justify-content: center; gap: 16px; }
+}

@@ -15,3 +15,12 @@
 .btn:disabled{opacity:0.5;cursor:not-allowed;}
 .link{display:block;text-align:center;margin-top:20px;font-family:var(--font-mono);font-size:10px;letter-spacing:0.1em;color:var(--smoke);text-decoration:none;transition:color 0.2s;}
 .link:hover{color:var(--white);}
+@media (max-width: 768px) {
+  .box { padding: 36px 24px; }
+  .logo { font-size: 22px; }
+  .title { font-size: 17px; }
+  .input { font-size: 14px; padding: 14px 16px; }
+  .btn { font-size: 13px; padding: 18px; }
+  .erro { font-size: 13px; }
+  .link { font-size: 12px; }
+}

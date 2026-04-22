@@ -42,3 +42,17 @@
 .histTime{font-family:var(--font-mono);font-size:9px;color:var(--smoke);letter-spacing:0.08em;font-weight:300;margin-left:8px;}
 .histPreview{font-size:12px;color:var(--smoke);margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 @media(max-width:600px){.grid{grid-template-columns:1fr;}.tabs{flex-wrap:wrap;}.tab{flex:none;width:50%;}}
+@media (max-width: 768px) {
+  .main { padding: 24px 16px 80px; }
+  .title { font-size: clamp(28px, 8vw, 44px); }
+  .sub { font-size: 14px; }
+  .card { padding: 20px 16px; }
+  .grid { grid-template-columns: 1fr; }
+  .tabs { flex-wrap: wrap; }
+  .tab { flex: none; min-width: 50%; font-size: 11px; padding: 12px 8px; }
+  .textarea { font-size: 14px; }
+  .input { font-size: 14px; }
+  .outputBox { font-size: 14px; line-height: 1.7; padding: 16px; }
+  .outputTitle { font-size: 16px; }
+  .histName { font-size: 14px; }
+}

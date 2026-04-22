@@ -28,3 +28,20 @@
 .btnBloquear:hover{background:rgba(192,48,48,0.1);}
 .tagAtivo{font-family:var(--font-mono);font-size:9px;letter-spacing:0.1em;color:var(--green-br);border:1px solid var(--green);padding:4px 10px;text-transform:uppercase;}
 .empty{font-family:var(--font-mono);font-size:11px;color:var(--smoke);padding:20px;border:1px dashed var(--border);text-align:center;letter-spacing:0.08em;}
+@media (max-width: 768px) {
+  .header { padding: 14px 16px; }
+  .main { padding: 24px 16px 80px; }
+  .title { font-size: clamp(28px, 8vw, 44px); }
+  .statsGrid { grid-template-columns: repeat(3, 1fr); }
+  .statNum { font-size: 36px; }
+  .statLabel { font-size: 8px; }
+  .userCard { flex-direction: column; align-items: flex-start; gap: 12px; padding: 16px; }
+  .userActions { width: 100%; display: flex; gap: 8px; }
+  .btnAprovar { flex: 1; text-align: center; font-size: 11px; }
+  .btnBloquear { flex: 1; text-align: center; font-size: 11px; }
+  .userName { font-size: 15px; }
+  .userEmail { font-size: 11px; }
+  .headerNav { gap: 12px; }
+  .navLink { font-size: 11px; }
+  .btnLogout { font-size: 11px; padding: 6px 12px; }
+}
