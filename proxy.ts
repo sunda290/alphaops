@@ -4,7 +4,7 @@ const ROTAS_PROTEGIDAS_ADMIN = ['/admin', '/assistente']
 const ROTAS_PROTEGIDAS_PONTA = ['/ponta-de-lanca']
 const ROTAS_AUTH = ['/login', '/signup']
 
-export function middleware(req: NextRequest) {
+export function proxy(req: NextRequest) {
   const { pathname } = req.nextUrl
   const token = req.cookies.get('alphaops-token')?.value
   const role  = req.cookies.get('alphaops-role')?.value
