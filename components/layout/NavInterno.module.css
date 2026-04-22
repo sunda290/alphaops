@@ -1,0 +1,32 @@
+.header{background:var(--dark);border-bottom:1px solid var(--border);padding:0 28px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;height:60px;backdrop-filter:blur(10px);}
+.left{display:flex;align-items:center;}
+.logo{font-family:var(--font-cond);font-weight:900;font-size:18px;letter-spacing:0.08em;text-transform:uppercase;color:var(--white);display:flex;align-items:center;gap:10px;}
+.logo span:first-of-type{color:var(--green-br);}
+.badge{font-family:var(--font-mono);font-size:8px;letter-spacing:0.12em;color:var(--black);background:var(--gold);padding:3px 8px;font-weight:400;}
+.nav{display:flex;align-items:center;gap:4px;}
+.navLink{display:flex;align-items:center;gap:8px;font-family:var(--font-mono);font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--smoke);text-decoration:none;padding:8px 14px;border:1px solid transparent;transition:all 0.2s;}
+.navLink:hover{color:var(--white);border-color:var(--border);}
+.navLinkAtivo{color:var(--green-br);border-color:var(--green);background:rgba(61,107,46,0.08);}
+.navIcone{font-size:12px;opacity:0.7;}
+.right{display:flex;align-items:center;}
+.btnSair{font-family:var(--font-mono);font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--smoke);background:none;border:1px solid var(--border);padding:7px 14px;cursor:pointer;transition:all 0.2s;}
+.btnSair:hover{color:var(--white);border-color:var(--smoke);}
+.hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:8px;}
+.bar{display:block;width:22px;height:2px;background:var(--smoke);transition:all 0.3s;}
+.barTop{transform:translateY(7px) rotate(45deg);}
+.barMid{opacity:0;}
+.barBot{transform:translateY(-7px) rotate(-45deg);}
+.mobileMenu{display:none;position:absolute;top:60px;left:0;right:0;background:var(--dark);border-bottom:1px solid var(--border);flex-direction:column;padding:8px 0;}
+.mobileLink{display:flex;align-items:center;gap:12px;font-family:var(--font-mono);font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:var(--smoke);text-decoration:none;padding:16px 28px;border-left:3px solid transparent;transition:all 0.2s;}
+.mobileLink:hover{color:var(--white);background:rgba(255,255,255,0.03);}
+.mobileLinkAtivo{color:var(--green-br);border-left-color:var(--green-br);background:rgba(61,107,46,0.06);}
+.mobileSair{font-family:var(--font-mono);font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:var(--smoke);background:none;border:none;border-top:1px solid var(--border);padding:16px 28px;cursor:pointer;text-align:left;width:100%;margin-top:8px;transition:color 0.2s;}
+.mobileSair:hover{color:var(--white);}
+
+@media(max-width:768px){
+  .nav{display:none;}
+  .right{display:none;}
+  .hamburger{display:flex;}
+  .mobileMenu{display:flex;}
+  .header{padding:0 16px;}
+}

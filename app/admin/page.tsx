@@ -1,5 +1,6 @@
 'use client'
 import { useState, useEffect } from 'react'
+import NavInterno from '@/components/layout/NavInterno'
 import styles from './admin.module.css'
 
 interface Usuario {
@@ -32,24 +33,13 @@ export default function Admin() {
     carregarUsuarios()
   }
 
-  async function sair() {
-    await fetch('/api/auth/logout', { method: 'POST' })
-    window.location.href = '/login'
-  }
-
   const pendentes  = usuarios.filter(u => u.status === 'pendente')
   const aprovados  = usuarios.filter(u => u.status === 'aprovado')
   const bloqueados = usuarios.filter(u => u.status === 'bloqueado')
 
   return (
     <div className={styles.page}>
-      <header className={styles.header}>
-        <div className={styles.logo}>Alpha<span>Ops</span> <span className={styles.badge}>Admin</span></div>
-        <div className={styles.headerNav}>
-          <a href="/assistente" className={styles.navLink}>Assistente</a>
-          <button className={styles.btnLogout} onClick={sair}>Sair</button>
-        </div>
-      </header>
+      <NavInterno role="admin" paginaAtual="/admin" />
 
       <main className={styles.main}>
         <h1 className={styles.title}>Painel <em>Admin</em></h1>

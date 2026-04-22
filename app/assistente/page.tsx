@@ -1,5 +1,6 @@
 'use client'
 import { useState } from 'react'
+import NavInterno from '@/components/layout/NavInterno'
 import styles from './assistente.module.css'
 
 const OBJETIVOS = [
@@ -53,18 +54,10 @@ export default function Assistente() {
 
   return (
     <div className={styles.page}>
-      <header className={styles.header}>
-        <div className={styles.logo}>Alpha<span>Ops</span></div>
-        <div className={styles.headerTag}>
-          <span className={styles.dot} />
-          Assistente de Diagnóstico
-        </div>
-      </header>
+      <NavInterno role="admin" paginaAtual="/assistente" />
 
       <main className={styles.main}>
-        <h1 className={styles.title}>
-          Assistente de<br /><em>Diagnóstico</em>
-        </h1>
+        <h1 className={styles.title}>Assistente de<br /><em>Diagnóstico</em></h1>
         <p className={styles.sub}>Cole a mensagem do lead e receba a resposta certa para mandar.</p>
 
         <div className={styles.card}>

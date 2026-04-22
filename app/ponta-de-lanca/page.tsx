@@ -1,5 +1,6 @@
 'use client'
 import { useState } from 'react'
+import NavInterno from '@/components/layout/NavInterno'
 import styles from './ponta.module.css'
 
 export default function PontaDeLanca() {
@@ -25,21 +26,13 @@ export default function PontaDeLanca() {
     setLoading(false)
   }
 
-  async function sair() {
-    await fetch('/api/auth/logout', { method: 'POST' })
-    window.location.href = '/login'
-  }
-
   function copiar(texto: string) {
     navigator.clipboard.writeText(texto)
   }
 
   return (
     <div className={styles.page}>
-      <header className={styles.header}>
-        <div className={styles.logo}>Alpha<span>Ops</span></div>
-        <button className={styles.btnLogout} onClick={sair}>Sair</button>
-      </header>
+      <NavInterno role="ponta_de_lanca" paginaAtual="/ponta-de-lanca" />
 
       <main className={styles.main}>
         <h1 className={styles.title}>Gerador de<br /><em>Abordagem</em></h1>
