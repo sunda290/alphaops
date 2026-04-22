@@ -7,23 +7,20 @@ const ROTAS_AUTH = ['/login', '/signup']
 export function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl
   const token = req.cookies.get('alphaops-token')?.value
-  const role = req.cookies.get('alphaops-role')?.value
+  const role  = req.cookies.get('alphaops-role')?.value
 
-  // Rotas admin
   if (ROTAS_PROTEGIDAS_ADMIN.some(r => pathname.startsWith(r))) {
     if (!token || role !== 'admin') {
       return NextResponse.redirect(new URL('/login', req.url))
     }
   }
 
-  // Rotas ponta de lança
   if (ROTAS_PROTEGIDAS_PONTA.some(r => pathname.startsWith(r))) {
     if (!token || (role !== 'ponta_de_lanca' && role !== 'admin')) {
       return NextResponse.redirect(new URL('/login', req.url))
     }
   }
 
-  // Se já logado, redireciona para a área certa
   if (ROTAS_AUTH.includes(pathname) && token) {
     if (role === 'admin') return NextResponse.redirect(new URL('/admin', req.url))
     if (role === 'ponta_de_lanca') return NextResponse.redirect(new URL('/ponta-de-lanca', req.url))
@@ -33,5 +30,11 @@ export function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/admin/:path*', '/assistente/:path*', '/ponta-de-lanca/:path*', '/login', '/signup'],
+  matcher: [
+    '/admin/:path*',
+    '/assistente/:path*',
+    '/ponta-de-lanca/:path*',
+    '/login',
+    '/signup',
+  ],
 }
