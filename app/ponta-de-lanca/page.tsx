@@ -1,5 +1,5 @@
 'use client'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import NavInterno from '@/components/layout/NavInterno'
 import styles from './ponta.module.css'
 
@@ -7,6 +7,14 @@ export default function PontaDeLanca() {
   const [nicho, setNicho] = useState('')
   const [loading, setLoading] = useState(false)
   const [resultado, setResultado] = useState<{abordagem:string,cartao:string,roteiro:string} | null>(null)
+  const [role, setRole] = useState<'admin' | 'ponta_de_lanca'>('ponta_de_lanca')
+
+  useEffect(() => {
+    fetch('/api/auth/me')
+      .then(r => r.json())
+      .then(d => { if (d.role === 'admin') setRole('admin') })
+      .catch(() => {})
+  }, [])
 
   async function gerar() {
     if (!nicho.trim()) return
@@ -32,7 +40,7 @@ export default function PontaDeLanca() {
 
   return (
     <div className={styles.page}>
-      <NavInterno role="ponta_de_lanca" paginaAtual="/ponta-de-lanca" />
+      <NavInterno role={role} paginaAtual="/ponta-de-lanca" />
 
       <main className={styles.main}>
         <h1 className={styles.title}>Gerador de<br /><em>Abordagem</em></h1>
