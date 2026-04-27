@@ -10,7 +10,7 @@ export default function PontaDeLanca() {
   const [role, setRole] = useState<'admin' | 'ponta_de_lanca'>('ponta_de_lanca')
 
   useEffect(() => {
-    const match = document.cookie.match(/alphaops-role=([^;]+)/)
+    const match = document.cookie.match(/alphaops-role-pub=([^;]+)/)
     const val = match ? match[1].trim() : ''
     if (val === 'admin') setRole('admin')
   }, [])

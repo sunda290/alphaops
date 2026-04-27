@@ -53,6 +53,7 @@ export async function POST(req: NextRequest) {
     const res = NextResponse.json({ success: true, role: profile.role })
     res.cookies.set('alphaops-token', idToken, { httpOnly: true, secure: true, sameSite: 'lax', maxAge: 60*60*24*7, path: '/' })
     res.cookies.set('alphaops-role', profile.role, { httpOnly: true, secure: true, sameSite: 'lax', maxAge: 60*60*24*7, path: '/' })
+    res.cookies.set('alphaops-role-pub', profile.role, { httpOnly: false, secure: true, sameSite: 'lax', maxAge: 60*60*24*7, path: '/' })
     return res
 
   } catch (error) {
