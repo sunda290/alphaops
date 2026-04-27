@@ -36,3 +36,14 @@
   .blocoContent { font-size: 14px; line-height: 1.75; padding: 16px; }
   .blocoTitle { font-size: 11px; }
 }
+
+.camposGrid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:16px;}
+.campoGrupo{display:flex;flex-direction:column;gap:6px;}
+.campoLabel{font-family:var(--font-mono);font-size:9px;letter-spacing:0.12em;color:var(--smoke);text-transform:uppercase;}
+.usuarioInfo{font-family:var(--font-mono);font-size:10px;color:var(--smoke);margin-bottom:16px;letter-spacing:0.06em;}
+.usuarioInfo strong{color:var(--green-br);}
+.blocoAcoes{display:flex;gap:8px;align-items:center;}
+.btnCopiado{background:var(--green-br) !important;color:var(--black) !important;}
+.btnWhatsApp{font-family:var(--font-mono);font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--black);background:#25d366;border:none;padding:6px 14px;cursor:pointer;transition:background 0.2s;}
+.btnWhatsApp:hover{background:#1da851;}
+@media(max-width:768px){.camposGrid{grid-template-columns:1fr;}}

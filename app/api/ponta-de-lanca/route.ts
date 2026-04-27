@@ -6,7 +6,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Não autorizado' }, { status: 403 })
   }
   try {
-    const { nicho } = await req.json()
+    const { nicho, nomeLead, nomeUsuario } = await req.json()
     if (!nicho) return NextResponse.json({ error: 'Nicho obrigatório' }, { status: 400 })
 
     const prompt = `Você é o assistente de André de Souza Oliveira, Coronel Veterano do Exército Brasileiro, especialista em automação operacional para pequenas empresas.
@@ -14,6 +14,8 @@ export async function POST(req: NextRequest) {
 O Wallace é o ponta de lança de André. Ele aborda donos de estabelecimentos via WhatsApp para apresentar André e marcar um diagnóstico gratuito. Todo o atendimento é 100% remoto — por WhatsApp ou videochamada. André nunca vai ao estabelecimento fisicamente.
 
 Gere o material de abordagem para o nicho: "${nicho}"
+Nome do lead: ${nomeLead || "nao informado"}
+Nome de quem vai enviar: ${nomeUsuario || "Andre"}
 
 REGRAS IMPORTANTES:
 - Sem travessões no meio das frases
