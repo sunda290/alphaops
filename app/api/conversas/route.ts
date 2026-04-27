@@ -28,7 +28,7 @@ export async function GET(req: NextRequest) {
     if (role !== 'admin') {
       query = query.where('usuario_uid', '==', decoded.uid)
     }
-    query = query.orderBy('atualizado_em', 'desc').limit(50)
+    query = query.limit(50)
 
     const snap = await query.get()
     const conversas = snap.docs.map(d => ({ id: d.id, ...d.data() }))
