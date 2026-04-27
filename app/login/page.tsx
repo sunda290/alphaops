@@ -1,5 +1,6 @@
 'use client'
 import { useState } from 'react'
+import Image from 'next/image'
 import { signInWithEmailAndPassword, getAuth, sendPasswordResetEmail } from 'firebase/auth'
 import { initializeApp, getApps } from 'firebase/app'
 import { useRouter } from 'next/navigation'
@@ -15,6 +16,14 @@ const firebaseConfig = {
 }
 const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0]
 const auth = getAuth(app)
+
+function Logo() {
+  return (
+    <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '24px' }}>
+      <Image src="/logo.png" alt="AlphaOps" width={180} height={52} style={{ objectFit: 'contain' }} priority />
+    </div>
+  )
+}
 
 export default function Login() {
   const [email, setEmail]               = useState('')
@@ -71,7 +80,7 @@ export default function Login() {
   if (resetEnviado) return (
     <div className={styles.page}>
       <div className={styles.box}>
-        <div className={styles.logo}>Alpha<span>Ops</span></div>
+        <Logo />
         <h1 className={styles.title}>Email enviado</h1>
         <p style={{fontFamily:'var(--font-mono)',fontSize:12,color:'var(--mist)',lineHeight:1.7,marginBottom:20}}>
           Enviamos um link de recuperação para {email}. Verifique sua caixa de entrada e spam.
@@ -86,7 +95,7 @@ export default function Login() {
   if (modo === 'reset') return (
     <div className={styles.page}>
       <div className={styles.box}>
-        <div className={styles.logo}>Alpha<span>Ops</span></div>
+        <Logo />
         <h1 className={styles.title}>Recuperar senha</h1>
         <form onSubmit={handleReset} className={styles.form}>
           <div className={styles.field}>
@@ -118,7 +127,7 @@ export default function Login() {
   return (
     <div className={styles.page}>
       <div className={styles.box}>
-        <div className={styles.logo}>Alpha<span>Ops</span></div>
+        <Logo />
         <h1 className={styles.title}>Acesso ao sistema</h1>
         <form onSubmit={handleLogin} className={styles.form}>
           <div className={styles.field}>
