@@ -4,17 +4,34 @@ import { db } from '@/lib/firebase-admin'
 export async function GET() {
   try {
     const [calRes, snapshot] = await Promise.all([
-      fetch('https://api.cal.com/v1/bookings?apiKey=' + process.env.CAL_API_KEY, {
-        headers: { 'Content-Type': 'application/json' },
+      fetch('https://api.cal.com/v2/bookings', {
+        headers: {
+          'Authorization': 'Bearer ' + process.env.CAL_API_KEY,
+          'cal-api-version': '2024-08-13',
+          'Content-Type': 'application/json',
+        },
         cache: 'no-store',
       }),
       db.collection('reunioes_manuais').orderBy('criadoEm', 'desc').get()
     ])
 
-    const calData = calRes.ok ? await calRes.json() : { bookings: [] }
+    const calData = calRes.ok ? await calRes.json() : { data: [] }
+
+    const calBookings = (calData.data || []).map((b: any) => ({
+      id: b.id,
+      uid: b.uid,
+      title: b.title,
+      startTime: b.start,
+      endTime: b.end,
+      status: b.status?.toUpperCase(),
+      attendees: b.attendees || [],
+      description: b.description || '',
+      manual: false,
+    }))
+
     const manuais = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data(), manual: true }))
 
-    return NextResponse.json({ reunioes: [...(calData.bookings || []), ...manuais] })
+    return NextResponse.json({ reunioes: [...calBookings, ...manuais] })
   } catch (err) {
     return NextResponse.json({ error: 'Erro interno' }, { status: 500 })
   }
@@ -53,9 +70,13 @@ export async function DELETE(request: Request) {
       return NextResponse.json({ ok: true })
     }
 
-    const res = await fetch(`https://api.cal.com/v1/bookings/${bookingId}/cancel?apiKey=${process.env.CAL_API_KEY}`, {
-      method: 'DELETE',
-      headers: { 'Content-Type': 'application/json' },
+    const res = await fetch(`https://api.cal.com/v2/bookings/${bookingId}/cancel`, {
+      method: 'POST',
+      headers: {
+        'Authorization': 'Bearer ' + process.env.CAL_API_KEY,
+        'cal-api-version': '2024-08-13',
+        'Content-Type': 'application/json',
+      },
       body: JSON.stringify({ reason: 'Cancelado pelo admin' }),
     })
     if (!res.ok) return NextResponse.json({ error: 'Erro ao cancelar' }, { status: 500 })
