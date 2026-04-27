@@ -1,18 +1,38 @@
 import { NextResponse } from 'next/server'
-import { db } from '@/lib/firebase-admin'
+
+const PROJECT_ID = process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID
+const FIRESTORE_URL = `https://firestore.googleapis.com/v1/projects/${PROJECT_ID}/databases/(default)/documents`
 
 export async function GET() {
   try {
-    const [calRes, snapshot] = await Promise.all([
+    const [calRes, fsRes] = await Promise.all([
       fetch('https://api.cal.com/v1/bookings?apiKey=' + process.env.CAL_API_KEY, {
         headers: { 'Content-Type': 'application/json' },
         cache: 'no-store',
       }),
-      db.collection('reunioes_manuais').orderBy('startTime', 'desc').get()
+      fetch(`${FIRESTORE_URL}/reunioes_manuais`, { cache: 'no-store' })
     ])
 
     const calData = calRes.ok ? await calRes.json() : { bookings: [] }
-    const manuais = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data(), manual: true }))
+
+    let manuais: any[] = []
+    if (fsRes.ok) {
+      const fsData = await fsRes.json()
+      manuais = (fsData.documents || []).map((doc: any) => {
+        const f = doc.fields || {}
+        const id = doc.name.split('/').pop()
+        return {
+          id,
+          manual: true,
+          title: f.title?.stringValue || 'Diagnóstico Estratégico',
+          startTime: f.startTime?.stringValue || '',
+          endTime: f.endTime?.stringValue || '',
+          status: f.status?.stringValue || 'ACCEPTED',
+          attendees: [{ name: f.nome?.stringValue || '', email: f.email?.stringValue || '' }],
+          description: f.observacao?.stringValue || '',
+        }
+      })
+    }
 
     return NextResponse.json({ reunioes: [...(calData.bookings || []), ...manuais] })
   } catch (err) {
@@ -26,17 +46,28 @@ export async function POST(request: Request) {
     if (!nome || !data || !hora) return NextResponse.json({ error: 'Campos obrigatórios: nome, data, hora' }, { status: 400 })
 
     const startTime = new Date(`${data}T${hora}:00`).toISOString()
-    const doc = await db.collection('reunioes_manuais').add({
-      title: 'Diagnóstico Estratégico',
-      startTime,
-      endTime: new Date(new Date(startTime).getTime() + 60 * 60 * 1000).toISOString(),
-      status: 'ACCEPTED',
-      attendees: [{ name: nome, email: email || '', phone: telefone || '' }],
-      description: observacao || '',
-      criadoEm: new Date().toISOString(),
+    const endTime = new Date(new Date(startTime).getTime() + 60 * 60 * 1000).toISOString()
+
+    const res = await fetch(`${FIRESTORE_URL}/reunioes_manuais`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        fields: {
+          nome: { stringValue: nome },
+          email: { stringValue: email || '' },
+          telefone: { stringValue: telefone || '' },
+          startTime: { stringValue: startTime },
+          endTime: { stringValue: endTime },
+          status: { stringValue: 'ACCEPTED' },
+          observacao: { stringValue: observacao || '' },
+          title: { stringValue: 'Diagnóstico Estratégico' },
+          criadoEm: { stringValue: new Date().toISOString() },
+        }
+      })
     })
 
-    return NextResponse.json({ ok: true, id: doc.id })
+    if (!res.ok) return NextResponse.json({ error: 'Erro ao salvar' }, { status: 500 })
+    return NextResponse.json({ ok: true })
   } catch (err) {
     return NextResponse.json({ error: 'Erro interno' }, { status: 500 })
   }
@@ -47,7 +78,7 @@ export async function DELETE(request: Request) {
     const { bookingId, manual } = await request.json()
 
     if (manual) {
-      await db.collection('reunioes_manuais').doc(String(bookingId)).delete()
+      await fetch(`${FIRESTORE_URL}/reunioes_manuais/${bookingId}`, { method: 'DELETE' })
       return NextResponse.json({ ok: true })
     }
 
