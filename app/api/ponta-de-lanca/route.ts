@@ -27,7 +27,7 @@ REGRAS IMPORTANTES:
 Responda APENAS em JSON válido, sem markdown, sem explicações, exatamente neste formato:
 {
   "abordagem": "mensagem curta para o Wallace enviar no WhatsApp do dono. Tom íntimo, direto, como quem está passando um bizu. Máximo 5 linhas. Sem emojis excessivos. Sem travessões.",
-  "cartao": "cartão de visita digital formatado para WhatsApp com *negrito* nos títulos. Apresenta André, seus 3 serviços aplicados ao nicho específico, e o link alphaops-six.vercel.app. Mencionar que o atendimento é 100% remoto.",
+  "cartao": "cartão de visita digital formatado para WhatsApp com *negrito* nos títulos. Apresenta André, seus 3 serviços aplicados ao nicho específico, e o link alphaops.cloud. Mencionar que o atendimento é 100% remoto.",
   "roteiro": "roteiro de conversa via WhatsApp com 5 etapas: 1-Abertura, 2-Identificar dor específica do nicho, 3-Apresentar solução de forma clara, 4-Propor diagnóstico gratuito por WhatsApp ou videochamada de 60 minutos (nunca mencionar visita presencial), 5-Fechar o compromisso. Cada etapa com a fala sugerida e o que fazer se o lead resistir."
 }`
 
