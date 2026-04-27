@@ -10,10 +10,9 @@ export default function PontaDeLanca() {
   const [role, setRole] = useState<'admin' | 'ponta_de_lanca'>('ponta_de_lanca')
 
   useEffect(() => {
-    fetch('/api/auth/me')
-      .then(r => r.json())
-      .then(d => { if (d.role === 'admin') setRole('admin') })
-      .catch(() => {})
+    const match = document.cookie.match(/alphaops-role=([^;]+)/)
+    const val = match ? match[1].trim() : ''
+    if (val === 'admin') setRole('admin')
   }, [])
 
   async function gerar() {
@@ -41,7 +40,6 @@ export default function PontaDeLanca() {
   return (
     <div className={styles.page}>
       <NavInterno role={role} paginaAtual="/ponta-de-lanca" />
-
       <main className={styles.main}>
         <h1 className={styles.title}>Gerador de<br /><em>Abordagem</em></h1>
         <p className={styles.sub}>Digite o nicho do estabelecimento e receba a abordagem completa.</p>
@@ -76,7 +74,6 @@ export default function PontaDeLanca() {
               </div>
               <div className={styles.blocoContent}>{resultado.abordagem}</div>
             </div>
-
             <div className={styles.bloco}>
               <div className={styles.blocoHeader}>
                 <div className={styles.blocoTitle}>// Cartão de visita digital</div>
@@ -84,7 +81,6 @@ export default function PontaDeLanca() {
               </div>
               <div className={styles.blocoContent}>{resultado.cartao}</div>
             </div>
-
             <div className={styles.bloco}>
               <div className={styles.blocoHeader}>
                 <div className={styles.blocoTitle}>// Roteiro de conversa</div>
