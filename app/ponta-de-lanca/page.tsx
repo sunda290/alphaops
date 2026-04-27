@@ -1,5 +1,5 @@
 'use client'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import NavInterno from '@/components/layout/NavInterno'
 import styles from './ponta.module.css'
 
@@ -13,25 +13,39 @@ interface EtapaData {
   proximaEtapa: number | null
 }
 
+interface Conversa {
+  id: string
+  nicho: string
+  nome_lead: string
+  whatsapp: string
+  nome_usuario: string
+  etapa_atual: number
+  etapas: EtapaData[]
+  atualizado_em: string
+  criado_em: string
+}
+
 const NOMES_ETAPAS = ['', 'Abertura', 'Identificar Dor', 'Apresentar Solução', 'Propor Diagnóstico', 'Fechar Compromisso']
 
 export default function PontaDeLanca() {
-  const [aba, setAba]                 = useState<'abordagem' | 'roteiro'>('abordagem')
-  const [nicho, setNicho]             = useState('')
-  const [nomeLead, setNomeLead]       = useState('')
-  const [whatsapp, setWhatsapp]       = useState('')
-  const [loading, setLoading]         = useState(false)
-  const [copiado, setCopiado]         = useState<string | null>(null)
-  const [resultado, setResultado]     = useState<{abordagem:string,cartao:string} | null>(null)
-  const [role, setRole]               = useState<'admin' | 'ponta_de_lanca'>('ponta_de_lanca')
-  const [nomeUsuario, setNomeUsuario] = useState('')
-
-  // Roteiro
-  const [etapaAtual, setEtapaAtual]         = useState(0)
-  const [etapas, setEtapas]                 = useState<EtapaData[]>([])
-  const [respostaLead, setRespostaLead]     = useState('')
-  const [loadingEtapa, setLoadingEtapa]     = useState(false)
+  const [aba, setAba]                     = useState<'abordagem' | 'roteiro' | 'historico'>('abordagem')
+  const [nicho, setNicho]                 = useState('')
+  const [nomeLead, setNomeLead]           = useState('')
+  const [whatsapp, setWhatsapp]           = useState('')
+  const [loading, setLoading]             = useState(false)
+  const [copiado, setCopiado]             = useState<string | null>(null)
+  const [resultado, setResultado]         = useState<{abordagem:string,cartao:string} | null>(null)
+  const [role, setRole]                   = useState<'admin' | 'ponta_de_lanca'>('ponta_de_lanca')
+  const [nomeUsuario, setNomeUsuario]     = useState('')
+  const [etapaAtual, setEtapaAtual]       = useState(0)
+  const [etapas, setEtapas]               = useState<EtapaData[]>([])
+  const [respostaLead, setRespostaLead]   = useState('')
+  const [loadingEtapa, setLoadingEtapa]   = useState(false)
   const [mostrarContorno, setMostrarContorno] = useState<number | null>(null)
+  const [conversas, setConversas]         = useState<Conversa[]>([])
+  const [loadingConversas, setLoadingConversas] = useState(false)
+  const [conversaId, setConversaId]       = useState<string | null>(null)
+  const [salvando, setSalvando]           = useState(false)
 
   useEffect(() => {
     const match = document.cookie.match(/alphaops-role-pub=([^;]+)/)
@@ -42,6 +56,63 @@ export default function PontaDeLanca() {
       .then(d => { if (d.nome) setNomeUsuario(d.nome) })
       .catch(() => {})
   }, [])
+
+  const carregarConversas = useCallback(async () => {
+    setLoadingConversas(true)
+    try {
+      const res = await fetch('/api/conversas')
+      const data = await res.json()
+      setConversas(data.conversas || [])
+    } catch {}
+    setLoadingConversas(false)
+  }, [])
+
+  useEffect(() => {
+    if (aba === 'historico') carregarConversas()
+  }, [aba, carregarConversas])
+
+  async function salvarConversa() {
+    setSalvando(true)
+    try {
+      const res = await fetch('/api/conversas', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: conversaId, nicho, nomeLead, whatsapp, nomeUsuario, etapas, etapaAtual }),
+      })
+      const data = await res.json()
+      if (data.id) setConversaId(data.id)
+    } catch {}
+    setSalvando(false)
+  }
+
+  function carregarConversa(conv: Conversa) {
+    setNicho(conv.nicho)
+    setNomeLead(conv.nome_lead)
+    setWhatsapp(conv.whatsapp)
+    setEtapas(conv.etapas || [])
+    setEtapaAtual(conv.etapa_atual || 0)
+    setConversaId(conv.id)
+    setResultado(null)
+    setRespostaLead('')
+    setAba('roteiro')
+  }
+
+  async function deletarConversa(id: string) {
+    if (!confirm('Deletar esta conversa?')) return
+    await fetch('/api/conversas', {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id }),
+    })
+    carregarConversas()
+  }
+
+  function novaConversa() {
+    setNicho(''); setNomeLead(''); setWhatsapp('')
+    setEtapas([]); setEtapaAtual(0); setConversaId(null)
+    setResultado(null); setRespostaLead('')
+    setAba('abordagem')
+  }
 
   async function gerarAbordagem() {
     if (!nicho.trim()) return
@@ -55,7 +126,7 @@ export default function PontaDeLanca() {
       })
       const data = await res.json()
       setResultado(data)
-    } catch { alert('Erro ao gerar. Tente novamente.') }
+    } catch { alert('Erro ao gerar.') }
     setLoading(false)
   }
 
@@ -69,13 +140,21 @@ export default function PontaDeLanca() {
         body: JSON.stringify({ etapa, nicho, nomeLead, nomeUsuario, respostaLead: resposta || '' }),
       })
       const data = await res.json()
-      setEtapas(prev => {
-        const novo = [...prev]
-        novo[etapa - 1] = data
-        return novo
-      })
+      const novasEtapas = [...etapas]
+      novasEtapas[etapa - 1] = data
+      setEtapas(novasEtapas)
       setEtapaAtual(etapa)
       setRespostaLead('')
+      // Auto-salvar
+      setTimeout(async () => {
+        const res2 = await fetch('/api/conversas', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id: conversaId, nicho, nomeLead, whatsapp, nomeUsuario, etapas: novasEtapas, etapaAtual: etapa }),
+        })
+        const d2 = await res2.json()
+        if (d2.id && !conversaId) setConversaId(d2.id)
+      }, 100)
     } catch { alert('Erro ao gerar etapa.') }
     setLoadingEtapa(false)
   }
@@ -92,20 +171,26 @@ export default function PontaDeLanca() {
     window.open('https://wa.me/' + numero + '?text=' + encodeURIComponent(texto), '_blank')
   }
 
-  const camposPreenchidos = nicho.trim()
+  const temDados = nicho.trim()
 
   return (
     <div className={styles.page}>
       <NavInterno role={role} paginaAtual="/ponta-de-lanca" />
       <main className={styles.main}>
-        <h1 className={styles.title}>Gerador de<br /><em>Abordagem</em></h1>
+        <div className={styles.topBar}>
+          <h1 className={styles.title}>Gerador de<br /><em>Abordagem</em></h1>
+          <div className={styles.topAcoes}>
+            {conversaId && <span className={styles.conversaTag}>Conversa salva</span>}
+            <button className={styles.btnNova} onClick={novaConversa}>+ Nova conversa</button>
+          </div>
+        </div>
 
         {/* Campos comuns */}
         <div className={styles.camposGrid}>
           <div className={styles.campoGrupo}>
-            <div className={styles.campoLabel}>Nicho do estabelecimento *</div>
+            <div className={styles.campoLabel}>Nicho *</div>
             <input className={styles.input} type="text"
-              placeholder="Ex: clinica odontologica, restaurante..."
+              placeholder="Ex: clinica odontologica..."
               value={nicho} onChange={e => setNicho(e.target.value)} />
           </div>
           <div className={styles.campoGrupo}>
@@ -115,7 +200,7 @@ export default function PontaDeLanca() {
               value={nomeLead} onChange={e => setNomeLead(e.target.value)} />
           </div>
           <div className={styles.campoGrupo}>
-            <div className={styles.campoLabel}>WhatsApp do lead (com DDI)</div>
+            <div className={styles.campoLabel}>WhatsApp (com DDI)</div>
             <input className={styles.input} type="text"
               placeholder="Ex: 5561999999999"
               value={whatsapp} onChange={e => setWhatsapp(e.target.value)} />
@@ -125,6 +210,7 @@ export default function PontaDeLanca() {
         {nomeUsuario && (
           <div className={styles.usuarioInfo}>
             Gerando como: <strong>{nomeUsuario}</strong>
+            {conversaId && <span className={styles.salvandoTag}>{salvando ? ' · Salvando...' : ' · Salvo'}</span>}
           </div>
         )}
 
@@ -136,12 +222,15 @@ export default function PontaDeLanca() {
           <button className={styles.aba + (aba === 'roteiro' ? ' ' + styles.abaAtiva : '')} onClick={() => setAba('roteiro')}>
             Roteiro de conversa
           </button>
+          <button className={styles.aba + (aba === 'historico' ? ' ' + styles.abaAtiva : '')} onClick={() => setAba('historico')}>
+            Conversas salvas
+          </button>
         </div>
 
         {/* ABA: Abordagem */}
         {aba === 'abordagem' && (
           <div>
-            <button className={styles.btnGerar} onClick={gerarAbordagem} disabled={loading || !camposPreenchidos}>
+            <button className={styles.btnGerar} onClick={gerarAbordagem} disabled={loading || !temDados}>
               {loading ? 'Gerando...' : 'Gerar abordagem'}
             </button>
             {loading && <div className={styles.loading}><div className={styles.spinner} /><span>Gerando...</span></div>}
@@ -173,11 +262,10 @@ export default function PontaDeLanca() {
         {aba === 'roteiro' && (
           <div className={styles.roteiro}>
             {etapaAtual === 0 && (
-              <button className={styles.btnGerar} onClick={() => gerarEtapa(1)} disabled={loadingEtapa || !camposPreenchidos}>
+              <button className={styles.btnGerar} onClick={() => gerarEtapa(1)} disabled={loadingEtapa || !temDados}>
                 {loadingEtapa ? 'Gerando...' : 'Iniciar conversa — Gerar abertura'}
               </button>
             )}
-
             {loadingEtapa && <div className={styles.loading}><div className={styles.spinner} /><span>Gerando...</span></div>}
 
             {etapas.map((etapa, idx) => etapa && (
@@ -186,8 +274,6 @@ export default function PontaDeLanca() {
                   <span className={styles.etapaBadge}>Etapa {etapa.etapa}</span>
                   <span className={styles.etapaNome}>{NOMES_ETAPAS[etapa.etapa]}</span>
                 </div>
-
-                {/* Mensagem limpa para enviar */}
                 <div className={styles.bloco}>
                   <div className={styles.blocoHeader}>
                     <div className={styles.blocoTitle}>// Mensagem para o lead</div>
@@ -200,8 +286,6 @@ export default function PontaDeLanca() {
                   </div>
                   <div className={styles.blocoContent}>{etapa.mensagem}</div>
                 </div>
-
-                {/* Orientação para o ponta de lança */}
                 <div className={styles.orientacao}>
                   <div className={styles.orientacaoTitle}>// Para você — não é enviado</div>
                   <div className={styles.orientacaoTexto}>{etapa.orientacao}</div>
@@ -211,7 +295,7 @@ export default function PontaDeLanca() {
                       <span>{etapa.avancar}</span>
                     </div>
                     <div className={styles.orientacaoItem}>
-                      <span className={styles.tagManter}>⟳ Manter etapa</span>
+                      <span className={styles.tagManter}>⟳ Manter</span>
                       <span>{etapa.manter}</span>
                     </div>
                   </div>
@@ -222,49 +306,72 @@ export default function PontaDeLanca() {
                     <div className={styles.contornoBox}>
                       <div className={styles.blocoHeader}>
                         <div className={styles.blocoTitle}>// Argumento de contorno</div>
-                        <button className={styles.btnCopy + (copiado === 'cont'+idx ? ' ' + styles.btnCopiado : '')} onClick={() => copiar(etapa.contorno, 'cont'+idx)}>
-                          {copiado === 'cont'+idx ? 'Copiado' : 'Copiar'}
-                        </button>
+                        <div className={styles.blocoAcoes}>
+                          <button className={styles.btnCopy + (copiado === 'cont'+idx ? ' ' + styles.btnCopiado : '')} onClick={() => copiar(etapa.contorno, 'cont'+idx)}>
+                            {copiado === 'cont'+idx ? 'Copiado' : 'Copiar'}
+                          </button>
+                          <button className={styles.btnWhatsApp} onClick={() => enviarWhatsApp(etapa.contorno)}>WhatsApp</button>
+                        </div>
                       </div>
                       <div className={styles.blocoContent}>{etapa.contorno}</div>
                     </div>
                   )}
                 </div>
-
-                {/* Campo resposta do lead para próxima etapa */}
                 {etapa.proximaEtapa && idx === etapas.filter(Boolean).length - 1 && (
                   <div className={styles.respostaArea}>
                     <div className={styles.campoLabel}>Cole aqui a resposta do lead</div>
-                    <textarea
-                      className={styles.textarea}
-                      rows={3}
+                    <textarea className={styles.textarea} rows={3}
                       placeholder="O que o lead respondeu..."
-                      value={respostaLead}
-                      onChange={e => setRespostaLead(e.target.value)}
-                    />
-                    <button
-                      className={styles.btnProxima}
+                      value={respostaLead} onChange={e => setRespostaLead(e.target.value)} />
+                    <button className={styles.btnProxima}
                       onClick={() => gerarEtapa(etapa.proximaEtapa!, respostaLead)}
-                      disabled={loadingEtapa || !respostaLead.trim()}
-                    >
+                      disabled={loadingEtapa || !respostaLead.trim()}>
                       {loadingEtapa ? 'Gerando...' : `Gerar Etapa ${etapa.proximaEtapa} — ${NOMES_ETAPAS[etapa.proximaEtapa]}`}
                     </button>
                   </div>
                 )}
-
                 {!etapa.proximaEtapa && idx === etapas.filter(Boolean).length - 1 && (
-                  <div className={styles.conversaConcluida}>
-                    Conversa concluída — lead deve estar agendado.
-                  </div>
+                  <div className={styles.conversaConcluida}>Conversa concluída — lead deve estar agendado.</div>
                 )}
               </div>
             ))}
 
-            {etapaAtual > 0 && (
-              <button className={styles.btnReset} onClick={() => { setEtapas([]); setEtapaAtual(0); setRespostaLead('') }}>
-                Reiniciar conversa
-              </button>
+            <div className={styles.roteiroAcoes}>
+              {etapaAtual > 0 && (
+                <button className={styles.btnSalvar} onClick={salvarConversa} disabled={salvando}>
+                  {salvando ? 'Salvando...' : conversaId ? 'Atualizar conversa' : 'Salvar conversa'}
+                </button>
+              )}
+              {etapaAtual > 0 && (
+                <button className={styles.btnReset} onClick={() => { setEtapas([]); setEtapaAtual(0); setRespostaLead(''); setConversaId(null) }}>
+                  Reiniciar
+                </button>
+              )}
+            </div>
+          </div>
+        )}
+
+        {/* ABA: Histórico */}
+        {aba === 'historico' && (
+          <div className={styles.historico}>
+            {loadingConversas && <div className={styles.loading}><div className={styles.spinner} /><span>Carregando...</span></div>}
+            {!loadingConversas && conversas.length === 0 && (
+              <div className={styles.vazio}>Nenhuma conversa salva ainda.</div>
             )}
+            {conversas.map(conv => (
+              <div key={conv.id} className={styles.conversaCard}>
+                <div className={styles.conversaInfo} onClick={() => carregarConversa(conv)}>
+                  <div className={styles.conversaNome}>{conv.nome_lead || 'Lead sem nome'}</div>
+                  <div className={styles.conversaNicho}>{conv.nicho}</div>
+                  <div className={styles.conversaMeta}>
+                    {role === 'admin' && <span className={styles.conversaUsuario}>{conv.nome_usuario}</span>}
+                    <span className={styles.conversaEtapa}>Etapa {conv.etapa_atual} — {NOMES_ETAPAS[conv.etapa_atual] || 'Não iniciado'}</span>
+                    <span className={styles.conversaData}>{new Date(conv.atualizado_em).toLocaleDateString('pt-BR')}</span>
+                  </div>
+                </div>
+                <button className={styles.btnDeletar} onClick={() => deletarConversa(conv.id)}>✕</button>
+              </div>
+            ))}
           </div>
         )}
       </main>
