@@ -1,5 +1,5 @@
 'use client'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import NavInterno from '@/components/layout/NavInterno'
 import styles from './assistente.module.css'
 
@@ -8,7 +8,25 @@ const OBJETIVOS = [
   { id: 'proposta', label: 'Proposta de valor' },
   { id: 'fechar', label: 'Fechar' },
   { id: 'objecao', label: 'Objeção' },
+  { id: 'diagnostico', label: 'Diagnóstico completo' },
 ]
+
+interface EtapaData {
+  etapa: number
+  mensagem: string
+  orientacao: string
+}
+
+interface Conversa {
+  id: string
+  nicho: string
+  nome_lead: string
+  whatsapp: string
+  nome_usuario: string
+  etapa_atual: number
+  etapas: EtapaData[]
+  atualizado_em: string
+}
 
 export default function Assistente() {
   const [mensagem, setMensagem] = useState('')
@@ -20,9 +38,46 @@ export default function Assistente() {
   const [loading, setLoading] = useState(false)
   const [copied, setCopied] = useState(false)
   const [historico, setHistorico] = useState<{nome:string,preview:string,resposta:string,time:string}[]>([])
+  const [conversas, setConversas] = useState<Conversa[]>([])
+  const [conversaSelecionada, setConversaSelecionada] = useState<string>('')
+  const [loadingConversas, setLoadingConversas] = useState(false)
+
+  useEffect(() => {
+    carregarConversas()
+  }, [])
+
+  async function carregarConversas() {
+    setLoadingConversas(true)
+    try {
+      const res = await fetch('/api/conversas')
+      const data = await res.json()
+      setConversas(data.conversas || [])
+    } catch {}
+    setLoadingConversas(false)
+  }
+
+  function selecionarConversa(id: string) {
+    setConversaSelecionada(id)
+    if (!id) return
+
+    const c = conversas.find(c => c.id === id)
+    if (!c) return
+
+    setNome(c.nome_lead || '')
+    setSegmento(c.nicho || '')
+
+    const resumo = (c.etapas || []).map((e, i) => {
+      const nomes = ['', 'Abertura', 'Identificar Dor', 'Apresentar Solução', 'Propor Diagnóstico', 'Fechar Compromisso']
+      return `[Etapa ${e.etapa} - ${nomes[e.etapa] || ''}]\nAbordagem usada: ${e.mensagem || ''}`
+    }).join('\n\n')
+
+    setContexto(resumo || 'Nenhuma etapa registrada ainda.')
+    setMensagem('')
+    setResposta('')
+  }
 
   async function gerar() {
-    if (!mensagem.trim()) return
+    if (!mensagem.trim() && objetivo !== 'diagnostico') return
     setLoading(true)
     setResposta('')
     try {
@@ -36,7 +91,7 @@ export default function Assistente() {
       setResposta(texto)
       setHistorico(h => [{
         nome: nome || 'Lead',
-        preview: mensagem.slice(0, 60) + '...',
+        preview: (mensagem || 'Diagnóstico completo').slice(0, 60) + '...',
         resposta: texto,
         time: new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })
       }, ...h])
@@ -52,25 +107,69 @@ export default function Assistente() {
     setTimeout(() => setCopied(false), 2000)
   }
 
+  const conversaSel = conversas.find(c => c.id === conversaSelecionada)
+
   return (
     <div className={styles.page}>
       <NavInterno role="admin" paginaAtual="/assistente" />
 
       <main className={styles.main}>
         <h1 className={styles.title}>Assistente de<br /><em>Diagnóstico</em></h1>
-        <p className={styles.sub}>Cole a mensagem do lead e receba a resposta certa para mandar.</p>
+        <p className={styles.sub}>Selecione um lead ou cole a mensagem manualmente.</p>
 
+        {/* Seletor de conversa */}
+        <div className={styles.card}>
+          <div className={styles.cardLabel}>// Carregar conversa salva</div>
+          <select
+            className={styles.input}
+            value={conversaSelecionada}
+            onChange={e => selecionarConversa(e.target.value)}
+            style={{width:'100%', marginBottom: conversaSelecionada ? 12 : 0}}
+          >
+            <option value="">
+              {loadingConversas ? 'Carregando conversas...' : `Selecionar lead (${conversas.length} conversas)`}
+            </option>
+            {conversas.map(c => (
+              <option key={c.id} value={c.id}>
+                {c.nome_lead || 'Sem nome'} — {c.nicho || 'Sem nicho'} — Etapa {c.etapa_atual}/5
+              </option>
+            ))}
+          </select>
+
+          {conversaSel && (
+            <div style={{
+              background:'var(--black)', border:'1px solid var(--border)',
+              padding:'12px 16px', fontFamily:'var(--font-mono)', fontSize:10,
+              letterSpacing:'0.08em', color:'var(--smoke)', lineHeight:1.8
+            }}>
+              <span style={{color:'var(--green-br)'}}>✓ </span>
+              <strong style={{color:'var(--white)'}}>{conversaSel.nome_lead}</strong>
+              {' · '}{conversaSel.nicho}
+              {' · '}Etapa {conversaSel.etapa_atual} de 5
+              {' · '}Ponta: {conversaSel.nome_usuario}
+              {' · '}
+              <span style={{color:'var(--smoke)'}}>
+                {new Date(conversaSel.atualizado_em).toLocaleDateString('pt-BR')}
+              </span>
+            </div>
+          )}
+        </div>
+
+        {/* Mensagem do lead */}
         <div className={styles.card}>
           <div className={styles.cardLabel}>// Mensagem do lead</div>
           <textarea
             className={styles.textarea}
             rows={6}
-            placeholder="Cole aqui a mensagem, transcrição do áudio ou o que o lead disse..."
+            placeholder={objetivo === 'diagnostico'
+              ? 'Opcional — o assistente usará o histórico da conversa para gerar o diagnóstico completo.'
+              : 'Cole aqui a mensagem, transcrição do áudio ou o que o lead disse...'}
             value={mensagem}
             onChange={e => setMensagem(e.target.value)}
           />
         </div>
 
+        {/* Contexto */}
         <div className={styles.card}>
           <div className={styles.cardLabel}>// Contexto</div>
           <div className={styles.grid}>
@@ -84,11 +183,18 @@ export default function Assistente() {
             </div>
           </div>
           <div style={{marginTop:12}}>
-            <div className={styles.fieldLabel}>O que já foi conversado</div>
-            <textarea className={styles.textarea} rows={3} placeholder="Resumo do histórico da conversa..." value={contexto} onChange={e => setContexto(e.target.value)} />
+            <div className={styles.fieldLabel}>Histórico da conversa</div>
+            <textarea
+              className={styles.textarea}
+              rows={5}
+              placeholder="Resumo do histórico da conversa..."
+              value={contexto}
+              onChange={e => setContexto(e.target.value)}
+            />
           </div>
         </div>
 
+        {/* Objetivo */}
         <div className={styles.card}>
           <div className={styles.cardLabel}>// Objetivo desta resposta</div>
           <div className={styles.tabs}>
@@ -102,16 +208,27 @@ export default function Assistente() {
               </button>
             ))}
           </div>
+          {objetivo === 'diagnostico' && (
+            <div style={{marginTop:12, fontFamily:'var(--font-mono)', fontSize:10, color:'var(--smoke)', letterSpacing:'0.08em', lineHeight:1.7}}>
+              O assistente vai analisar todo o histórico e gerar: dores identificadas, oportunidade de automação, proposta de valor e próximo passo sugerido.
+            </div>
+          )}
         </div>
 
-        <button className={styles.btnGenerate} onClick={gerar} disabled={loading || !mensagem.trim()}>
-          {loading ? 'Gerando...' : '→ Gerar resposta'}
+        <button
+          className={styles.btnGenerate}
+          onClick={gerar}
+          disabled={loading || (!mensagem.trim() && objetivo !== 'diagnostico')}
+        >
+          {loading ? 'Gerando...' : objetivo === 'diagnostico' ? '→ Gerar diagnóstico completo' : '→ Gerar resposta'}
         </button>
 
         {(loading || resposta) && (
           <div className={styles.outputSection}>
             <div className={styles.outputHeader}>
-              <div className={styles.outputTitle}>Resposta gerada</div>
+              <div className={styles.outputTitle}>
+                {objetivo === 'diagnostico' ? 'Diagnóstico gerado' : 'Resposta gerada'}
+              </div>
               {resposta && (
                 <button className={`${styles.btnCopy} ${copied ? styles.btnCopied : ''}`} onClick={copiar}>
                   {copied ? '✓ Copiado' : 'Copiar'}
@@ -121,7 +238,7 @@ export default function Assistente() {
             {loading ? (
               <div className={styles.loading}>
                 <div className={styles.spinner} />
-                <span>Analisando e gerando resposta...</span>
+                <span>Analisando e gerando{objetivo === 'diagnostico' ? ' diagnóstico' : ' resposta'}...</span>
               </div>
             ) : (
               <div className={styles.outputBox}>{resposta}</div>
