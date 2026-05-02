@@ -52,13 +52,25 @@ export async function POST(req: NextRequest) {
 
     const { id, nicho, nomeLead, whatsapp, nomeUsuario, etapas, etapaAtual } = body
 
+    type EtapaIn = {
+      etapa: number; mensagem: string; orientacao: string;
+      avancar: string; manter: string; contorno: string;
+      proximaEtapa: number | null; respostaLead?: string;
+    }
+    const etapasNorm: EtapaIn[] = Array.isArray(etapas)
+      ? (etapas as EtapaIn[]).map(e => ({
+          ...e,
+          respostaLead: typeof e?.respostaLead === 'string' ? e.respostaLead : '',
+        }))
+      : []
+
     const dados = {
       usuario_uid:  decoded.uid,
       nome_usuario: nomeUsuario || '',
       nicho,
       nome_lead:    nomeLead || '',
       whatsapp:     whatsapp || '',
-      etapas:       etapas || [],
+      etapas:       etapasNorm,
       etapa_atual:  etapaAtual || 0,
       atualizado_em: new Date().toISOString(),
     }
