@@ -62,7 +62,7 @@
 .produtoFeatures li{list-style:none;display:flex;gap:8px;font-size:13px;color:var(--smoke);align-items:flex-start;}
 .produtoFeatures li::before{content:'→';color:var(--green-lt);flex-shrink:0;}
 .produtoFeatured .produtoFeatures li::before{color:var(--gold);}
-.produtoPrice{font-family:var(--font-cond);font-weight:900;font-size:38px;color:var(--white);letter-spacing:-0.02em;margin-bottom:4px;}
+.produtoPrice{font-family:var(--font-cond);font-weight:900;font-size:38px;color:var(--white);letter-spacing:-0.02em;margin-bottom:4px;font-style:normal;text-transform:uppercase;}
 .produtoPriceNote{font-size:11px;color:var(--smoke);margin-bottom:24px;}
 .produtoCta{display:block;text-align:center;font-family:var(--font-cond);font-weight:700;font-size:13px;letter-spacing:0.1em;text-transform:uppercase;padding:14px;text-decoration:none;transition:all 0.2s;}
 .produtoCtaOutline{border:1px solid var(--border);color:var(--smoke);}
@@ -98,12 +98,18 @@
 .footerLinks a{font-family:var(--font-mono);font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--smoke);text-decoration:none;transition:color 0.2s;}
 .footerLinks a:hover{color:var(--white);}
 .footerCopy{font-family:var(--font-mono);font-size:11px;color:var(--border2);text-transform:uppercase;letter-spacing:0.08em;}
-@media(max-width:900px){.heroInner{grid-template-columns:1fr;}.heroPanel{display:none;}.dorGrid{grid-template-columns:1fr;gap:48px;}.calcBox{position:static;}.produtosGrid{grid-template-columns:1fr;}.metodoGrid{grid-template-columns:1fr;}.briefingBox{position:static;}.footer .container{flex-direction:column;gap:20px;text-align:center;}.footerLinks{flex-wrap:wrap;justify-content:center;}}
+@media(max-width:900px){.heroInner{grid-template-columns:1fr;}.heroPanel{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}.statCard{padding:14px 12px;}.statNumber{font-size:28px;}.statLabel{font-size:11px;line-height:1.4;}.dorGrid{grid-template-columns:1fr;gap:48px;}.calcBox{position:static;}.produtosGrid{grid-template-columns:1fr;}.metodoGrid{grid-template-columns:1fr;}.briefingBox{position:static;}.footer .container{flex-direction:column;gap:20px;text-align:center;}.footerLinks{flex-wrap:wrap;justify-content:center;}}
 
 /* ── MOBILE LANDING ── */
 @media (max-width: 768px) {
-  .heroInner { grid-template-columns: 1fr; padding: 100px 0 48px; gap: 32px; }
-  .heroPanel { display: none; }
+  .heroInner { grid-template-columns: 1fr; padding: 100px 0 48px; gap: 24px; }
+
+  /* Stat cards — compact horizontal strip instead of hidden */
+  .heroPanel { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+  .statCard { padding: 12px 10px; }
+  .statNumber { font-size: 24px; }
+  .statLabel { font-size: 10px; line-height: 1.4; }
+
   .heroH1 { font-size: clamp(40px, 11vw, 64px); margin-bottom: 20px; }
   .heroSub { font-size: 15px; }
   .heroBtns { flex-direction: column; gap: 16px; }
@@ -115,16 +121,16 @@
   .sectionH2 { font-size: clamp(28px, 8vw, 44px); margin-bottom: 32px; }
   .sectionLead { font-size: 15px; }
   .dorGrid { grid-template-columns: 1fr; gap: 40px; }
-  .calcBox { position: static; }
-  .calcRow { font-size: 14px; }
-  .calcVal { font-size: 18px; }
-  .calcRowHighlight .calcVal { font-size: 24px; }
+
+  /* Featured card — gold top border maintains distinction on single-column layout */
   .produtosGrid { grid-template-columns: 1fr; }
+  .produtoFeatured { border-top: 3px solid var(--gold); outline: none; }
   .produtoCard { padding: 28px 20px; }
   .produtoTitle { font-size: 20px; }
   .produtoDesc { font-size: 14px; }
   .produtoFeatures li { font-size: 13px; }
   .produtoPrice { font-size: 32px; }
+
   .metodoGrid { grid-template-columns: 1fr; gap: 48px; }
   .briefingBox { position: static; padding: 24px 20px; }
   .briefingKey { font-size: 11px; }

@@ -1,5 +1,6 @@
 import Nav from '@/components/layout/Nav'
 import LeadForm from '@/components/ui/LeadForm'
+import Calculadora from '@/components/ui/Calculadora'
 import styles from './page.module.css'
 
 const DOR_ITEMS = [
@@ -9,24 +10,19 @@ const DOR_ITEMS = [
   { n: '04', t: 'Sabe que precisa mudar', d: 'Já tentou ferramentas que não funcionaram. O problema não é esforço — é falta do sistema certo.' },
 ]
 
-const CALC_ROWS = [
-  { l: 'Horas manuais por dia',  v: '2h' },
-  { l: 'Semanas por ano',        v: '48' },
-  { l: 'Total desperdiçado',     v: '480h' },
-  { l: 'Se sua hora vale R$200', v: 'R$96k', highlight: true },
-]
+
 
 const PRODUTOS = [
   {
     num: '// 01',
-    tag: 'Entrada',
+    tag: 'Em breve',
     featured: false,
     title: 'Operação de Precisão',
-    desc: 'O guia militar para automatizar seu negócio.',
+    desc: 'O guia militar para automatizar seu negócio. Entre na lista de espera e seja o primeiro a saber.',
     price: 'R$ 47',
-    priceNote: 'Acesso imediato',
-    cta: 'Quero o E-book →',
-    href: '#',
+    priceNote: 'Lista de espera aberta',
+    cta: null,           // card usa LeadForm inline
+    href: null,
     items: [
       'Framework de mapeamento de processos',
       'Calculadora de ROI de automação',
@@ -178,16 +174,7 @@ export default function Home() {
               </div>
             </div>
 
-            <div className={styles.calcBox}>
-              <div className={styles.calcTitle}>// Calculadora de custo operacional</div>
-              {CALC_ROWS.map(row => (
-                <div key={row.l} className={`${styles.calcRow} ${row.highlight ? styles.calcRowHighlight : ''}`}>
-                  <span>{row.l}</span>
-                  <span className={styles.calcVal}>{row.v}</span>
-                </div>
-              ))}
-              <p className={styles.calcNote}>Esse é o custo real de não automatizar. Em reais. Por ano.</p>
-            </div>
+            <Calculadora />
 
           </div>
         </div>
@@ -212,12 +199,21 @@ export default function Home() {
                 </ul>
                 <div className={styles.produtoPrice}>{p.price}</div>
                 <div className={styles.produtoPriceNote}>{p.priceNote}</div>
-                <a
-                  href={p.href}
-                  className={`${styles.produtoCta} ${p.featured ? styles.produtoCtaSolid : styles.produtoCtaOutline}`}
-                >
-                  {p.cta}
-                </a>
+                {p.cta && p.href ? (
+                  <a
+                    href={p.href}
+                    className={`${styles.produtoCta} ${p.featured ? styles.produtoCtaSolid : styles.produtoCtaOutline}`}
+                  >
+                    {p.cta}
+                  </a>
+                ) : !p.cta ? (
+                  <LeadForm
+                    origem="landing_page"
+                    produto="ebook"
+                    ctaText="→ Entrar na lista de espera"
+                    showFields={['nome', 'email']}
+                  />
+                ) : null}
               </div>
             ))}
           </div>

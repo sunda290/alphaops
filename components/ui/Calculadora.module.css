@@ -1,0 +1,139 @@
+.box {
+  background: var(--card);
+  border: 1px solid var(--border2);
+  padding: 36px;
+}
+
+.title {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  color: var(--green-lt);
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 24px;
+}
+
+/* Sliders */
+.sliderGroup {
+  margin-bottom: 24px;
+}
+
+.sliderLabel {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-size: 14px;
+  color: var(--smoke);
+  margin-bottom: 10px;
+}
+
+.sliderVal {
+  font-family: var(--font-cond);
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--white);
+  transition: color 0.15s;
+}
+
+.slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 2px;
+  background: var(--border2);
+  outline: none;
+  cursor: pointer;
+  border-radius: 0;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  background: var(--gold);
+  cursor: pointer;
+  border-radius: 0;
+  transition: background 0.15s, transform 0.15s;
+}
+
+.slider::-webkit-slider-thumb:hover {
+  background: var(--gold-lt);
+  transform: scale(1.2);
+}
+
+.slider::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  background: var(--gold);
+  cursor: pointer;
+  border: none;
+  border-radius: 0;
+}
+
+.sliderTicks {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  color: var(--border2);
+  letter-spacing: 0.08em;
+  margin-top: 6px;
+}
+
+/* Resultados */
+.divider {
+  height: 1px;
+  background: var(--border);
+  margin: 8px 0 16px;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 14px;
+  color: var(--smoke);
+}
+
+.row:last-of-type {
+  border-bottom: none;
+}
+
+.rowVal {
+  font-family: var(--font-cond);
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--white);
+}
+
+.rowHighlight {
+  padding: 14px 0;
+  border-bottom: none;
+}
+
+.rowHighlightVal {
+  font-family: var(--font-cond);
+  font-weight: 900;
+  font-size: 28px;
+  color: var(--gold);
+  letter-spacing: -0.02em;
+  transition: color 0.2s;
+}
+
+.note {
+  margin-top: 16px;
+  font-size: 11px;
+  color: var(--smoke);
+  line-height: 1.6;
+  font-style: italic;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .box { padding: 24px 20px; }
+  .rowHighlightVal { font-size: 24px; }
+}
