@@ -1,24 +1,30 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { initializeApp, getApps } from 'firebase/app'
-import { getFirestore, collection, addDoc, serverTimestamp } from 'firebase/firestore'
+import { db } from '@/lib/firebase-admin'
+import { FieldValue } from 'firebase-admin/firestore'
 
-const firebaseConfig = {
-  apiKey:            process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
-  authDomain:        process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
-  projectId:         process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
-  storageBucket:     process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
-  appId:             process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
+// ── Rate limiting simples em memória (por IP, máx 3 req/min) ──────────────
+const rateLimitMap = new Map<string, { count: number; resetAt: number }>()
+
+function isRateLimited(ip: string): boolean {
+  const now = Date.now()
+  const entry = rateLimitMap.get(ip)
+  if (!entry || now > entry.resetAt) {
+    rateLimitMap.set(ip, { count: 1, resetAt: now + 60_000 })
+    return false
+  }
+  if (entry.count >= 3) return true
+  entry.count++
+  return false
 }
 
-const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0]
-const db = getFirestore(app)
+// ── Validação ─────────────────────────────────────────────────────────────
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
 function calcularScore(data: Record<string, string>): number {
   let score = 0
-  const scoreOrigem: Record<string, number> = { indicacao: 40, landing_page: 30, hotelaria: 30, alphaops: 25, linkedin: 20 }
+  const scoreOrigem:  Record<string, number> = { indicacao: 40, landing_page: 30, hotelaria: 30, alphaops: 25, linkedin: 20 }
   const scoreProduto: Record<string, number> = { alphaops_full: 40, hotelaria: 40, consultoria: 35, suitelog: 30, ebook: 10 }
-  score += scoreOrigem[data.origem] ?? 0
+  score += scoreOrigem[data.origem]          ?? 0
   score += scoreProduto[data.produto_interesse] ?? 0
   if (data.telefone) score += 15
   if (data.empresa)  score += 10
@@ -26,50 +32,30 @@ function calcularScore(data: Record<string, string>): number {
   return Math.min(score, 100)
 }
 
+// ── Notificações ──────────────────────────────────────────────────────────
 async function enviarWhatsApp(nome: string, email: string, telefone: string, score: number, temperatura: string, origem: string) {
   const token   = process.env.WHATSAPP_TOKEN
   const phoneId = process.env.WHATSAPP_PHONE_ID
   const to      = process.env.WHATSAPP_TO
-
   if (!token || !phoneId || !to) return
 
-  const emoji = temperatura === 'quente' ? '🔥' : temperatura === 'morno' ? '🟡' : '🔵'
-
-  const mensagem = `${emoji} *NOVO LEAD ${temperatura.toUpperCase()}*
-
-👤 *Nome:* ${nome}
-📧 *Email:* ${email}
-📱 *WhatsApp:* ${telefone || 'não informado'}
-📍 *Origem:* ${origem}
-📊 *Score:* ${score}/100
-
-�� Responder: https://wa.me/${telefone?.replace(/\D/g, '')}`
+  const emoji    = temperatura === 'quente' ? '🔥' : temperatura === 'morno' ? '🟡' : '🔵'
+  const mensagem = `${emoji} *NOVO LEAD ${temperatura.toUpperCase()}*\n\n👤 *Nome:* ${nome}\n📧 *Email:* ${email}\n📱 *WhatsApp:* ${telefone || 'não informado'}\n📍 *Origem:* ${origem}\n📊 *Score:* ${score}/100\n\n💬 Responder: https://wa.me/${telefone?.replace(/\D/g, '')}`
 
   await fetch(`https://graph.facebook.com/v25.0/${phoneId}/messages`, {
-    method: 'POST',
-    headers: {
-      'Authorization': `Bearer ${token}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      messaging_product: 'whatsapp',
-      to,
-      type: 'text',
-      text: { body: mensagem },
-    }),
+    method:  'POST',
+    headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
+    body:    JSON.stringify({ messaging_product: 'whatsapp', to, type: 'text', text: { body: mensagem } }),
   })
 }
 
 async function enviarEmailLead(nome: string, email: string) {
   await fetch('https://api.resend.com/emails', {
-    method: 'POST',
-    headers: {
-      'Authorization': `Bearer ${process.env.RESEND_API_KEY}`,
-      'Content-Type': 'application/json',
-    },
+    method:  'POST',
+    headers: { 'Authorization': `Bearer ${process.env.RESEND_API_KEY}`, 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      from: 'André Oliveira <onboarding@resend.dev>',
-      to: [email],
+      from:    'André Oliveira <onboarding@resend.dev>',
+      to:      [email],
       subject: `${nome}, sua sessão está confirmada`,
       html: `
         <div style="background:#000;color:#ede9e0;font-family:sans-serif;padding:48px;max-width:560px;margin:0 auto;">
@@ -96,14 +82,11 @@ async function enviarEmailLead(nome: string, email: string) {
 async function enviarEmailAndre(nome: string, email: string, telefone: string, score: number, temperatura: string, origem: string) {
   const emoji = temperatura === 'quente' ? '🔥' : temperatura === 'morno' ? '🟡' : '🔵'
   await fetch('https://api.resend.com/emails', {
-    method: 'POST',
-    headers: {
-      'Authorization': `Bearer ${process.env.RESEND_API_KEY}`,
-      'Content-Type': 'application/json',
-    },
+    method:  'POST',
+    headers: { 'Authorization': `Bearer ${process.env.RESEND_API_KEY}`, 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      from: 'AlphaOps Sistema <onboarding@resend.dev>',
-      to: ['sunda290@gmail.com'],
+      from:    'AlphaOps Sistema <onboarding@resend.dev>',
+      to:      ['sunda290@gmail.com'],
       subject: `${emoji} Novo lead ${temperatura.toUpperCase()} — ${nome}`,
       html: `
         <div style="background:#000;color:#ede9e0;font-family:monospace;padding:48px;max-width:560px;margin:0 auto;">
@@ -126,20 +109,31 @@ async function enviarEmailAndre(nome: string, email: string, telefone: string, s
   })
 }
 
+// ── Handler ───────────────────────────────────────────────────────────────
 export async function POST(req: NextRequest) {
   try {
-    const body = await req.json()
-
-    if (!body.nome || !body.email) {
-      return NextResponse.json({ error: 'Nome e email obrigatórios' }, { status: 400 })
+    // Rate limiting
+    const ip = req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ?? 'unknown'
+    if (isRateLimited(ip)) {
+      return NextResponse.json({ error: 'Muitas requisições. Aguarde um minuto.' }, { status: 429 })
     }
 
-    const score = calcularScore(body)
+    const body = await req.json()
+
+    // Validação
+    if (!body.nome || typeof body.nome !== 'string' || body.nome.trim().length < 2) {
+      return NextResponse.json({ error: 'Nome inválido.' }, { status: 400 })
+    }
+    if (!body.email || !EMAIL_RE.test(body.email)) {
+      return NextResponse.json({ error: 'E-mail inválido.' }, { status: 400 })
+    }
+
+    const score       = calcularScore(body)
     const temperatura = score >= 70 ? 'quente' : score >= 40 ? 'morno' : 'frio'
 
     const lead = {
-      nome:              body.nome,
-      email:             body.email,
+      nome:              body.nome.trim(),
+      email:             body.email.toLowerCase().trim(),
       telefone:          body.telefone  ?? null,
       empresa:           body.empresa   ?? null,
       setor:             body.setor     ?? null,
@@ -149,10 +143,10 @@ export async function POST(req: NextRequest) {
       score,
       temperatura,
       status:    'novo',
-      criado_em: serverTimestamp(),
+      criado_em: FieldValue.serverTimestamp(),
     }
 
-    const ref = await addDoc(collection(db, 'leads'), lead)
+    const ref = await db.collection('leads').add(lead)
 
     await Promise.allSettled([
       enviarEmailLead(body.nome, body.email),

@@ -1,21 +1,10 @@
 'use client'
 import { useState } from 'react'
-import { createUserWithEmailAndPassword, getAuth } from 'firebase/auth'
-import { getFirestore, doc, setDoc, serverTimestamp } from 'firebase/firestore'
-import { initializeApp, getApps } from 'firebase/app'
+import Image from 'next/image'
+import { createUserWithEmailAndPassword } from 'firebase/auth'
+import { doc, setDoc, serverTimestamp } from 'firebase/firestore'
+import { auth, db } from '@/lib/firebase'
 import styles from '../login/login.module.css'
-
-const firebaseConfig = {
-  apiKey:            process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
-  authDomain:        process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
-  projectId:         process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
-  storageBucket:     process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
-  appId:             process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
-}
-const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0]
-const auth = getAuth(app)
-const db = getFirestore(app)
 
 export default function Signup() {
   const [nome, setNome] = useState('')
@@ -58,7 +47,9 @@ export default function Signup() {
   if (sucesso) return (
     <div className={styles.page}>
       <div className={styles.box}>
-        <div className={styles.logo}>Alpha<span>Ops</span></div>
+        <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '24px' }}>
+          <Image src="/logo.png" alt="AlphaOps" width={180} height={52} style={{ objectFit: 'contain' }} priority />
+        </div>
         <h1 className={styles.title}>Cadastro enviado</h1>
         <p style={{fontFamily:'var(--font-mono)',fontSize:12,color:'var(--mist)',lineHeight:1.7,marginBottom:20}}>
           Seu cadastro foi recebido e está aguardando aprovação de André.
@@ -72,7 +63,9 @@ export default function Signup() {
   return (
     <div className={styles.page}>
       <div className={styles.box}>
-        <div className={styles.logo}>Alpha<span>Ops</span></div>
+        <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '24px' }}>
+          <Image src="/logo.png" alt="AlphaOps" width={180} height={52} style={{ objectFit: 'contain' }} priority />
+        </div>
         <h1 className={styles.title}>Solicitar acesso</h1>
         <form onSubmit={handleSignup} className={styles.form}>
           <div className={styles.field}>
