@@ -1,6 +1,7 @@
 'use client'
 import { useState, useEffect, useCallback } from 'react'
 import NavInterno from '@/components/layout/NavInterno'
+import { saveToWikiFolder, slugify } from '@/lib/wiki-export'
 import styles from './ponta.module.css'
 
 interface EtapaData {
@@ -11,6 +12,7 @@ interface EtapaData {
   manter: string
   contorno: string
   proximaEtapa: number | null
+  respostaLead?: string
 }
 
 interface Conversa {
@@ -26,6 +28,43 @@ interface Conversa {
 }
 
 const NOMES_ETAPAS = ['', 'Abertura', 'Identificar Dor', 'Apresentar Solução', 'Propor Diagnóstico', 'Fechar Compromisso']
+
+function formatarConversaParaMarkdown(conv: Conversa): string {
+  const slugLead = slugify(conv.nome_lead || '')
+  const data = conv.atualizado_em ? new Date(conv.atualizado_em) : new Date()
+  const dataYmd = data.toISOString().slice(0, 10)
+  const dataPtBr = data.toLocaleDateString('pt-BR')
+
+  const linhas: string[] = [
+    '---',
+    'type: conversation',
+    'canal: whatsapp',
+    `contraparte: ${slugLead}`,
+    `data: ${dataYmd}`,
+    `nicho: ${conv.nicho || ''}`,
+    `operador: ${conv.nome_usuario || ''}`,
+    `etapa-final: ${conv.etapa_atual || 0}`,
+    '---',
+    '',
+    `# Conversa com ${conv.nome_lead || 'Lead sem nome'} — ${conv.nicho || ''}`,
+    '',
+    `**WhatsApp:** ${conv.whatsapp || ''}`,
+    `**Operador:** ${conv.nome_usuario || ''}`,
+    `**Última atualização:** ${dataPtBr}`,
+    '',
+  ]
+
+  for (const et of (conv.etapas || []).filter(Boolean)) {
+    linhas.push(`## Etapa ${et.etapa} — ${NOMES_ETAPAS[et.etapa] || ''}`, '')
+    if (et.respostaLead && et.respostaLead.trim()) {
+      linhas.push('**Resposta do lead na etapa anterior:**', et.respostaLead.trim(), '')
+    }
+    linhas.push('**Mensagem enviada:**', et.mensagem || '', '')
+    linhas.push('**Análise interna:**', et.orientacao || '', '')
+  }
+
+  return linhas.join('\n')
+}
 
 export default function PontaDeLanca() {
   const [aba, setAba]                     = useState<'abordagem' | 'roteiro' | 'historico'>('abordagem')
@@ -46,6 +85,8 @@ export default function PontaDeLanca() {
   const [loadingConversas, setLoadingConversas] = useState(false)
   const [conversaId, setConversaId]       = useState<string | null>(null)
   const [salvando, setSalvando]           = useState(false)
+  const [salvandoWiki, setSalvandoWiki]   = useState<string | null>(null)
+  const [wikiStatus, setWikiStatus]       = useState<{ id: string; mode: 'fs' | 'download' } | null>(null)
 
   useEffect(() => {
     const match = document.cookie.match(/alphaops-role-pub=([^;]+)/)
@@ -107,6 +148,22 @@ export default function PontaDeLanca() {
     carregarConversas()
   }
 
+  async function salvarNoWiki(conv: Conversa) {
+    const slug = slugify(conv.nome_lead || '')
+    const data = conv.atualizado_em ? new Date(conv.atualizado_em) : new Date()
+    const filename = `${data.toISOString().slice(0, 10)}-${slug}.md`
+    const content = formatarConversaParaMarkdown(conv)
+    setSalvandoWiki(conv.id)
+    try {
+      const result = await saveToWikiFolder('conversas', filename, content)
+      setWikiStatus({ id: conv.id, mode: result.mode })
+      const ttl = result.mode === 'fs' ? 2000 : 5000
+      setTimeout(() => setWikiStatus(prev => prev?.id === conv.id ? null : prev), ttl)
+    } finally {
+      setSalvandoWiki(null)
+    }
+  }
+
   function novaConversa() {
     setNicho(''); setNomeLead(''); setWhatsapp('')
     setEtapas([]); setEtapaAtual(0); setConversaId(null)
@@ -141,6 +198,10 @@ export default function PontaDeLanca() {
       })
       const data = await res.json()
       const novasEtapas = [...etapas]
+      const idxAnterior = etapa - 2
+      if (idxAnterior >= 0 && novasEtapas[idxAnterior] && resposta && resposta.trim()) {
+        novasEtapas[idxAnterior] = { ...novasEtapas[idxAnterior], respostaLead: resposta.trim() }
+      }
       novasEtapas[etapa - 1] = data
       setEtapas(novasEtapas)
       setEtapaAtual(etapa)
@@ -359,17 +420,31 @@ export default function PontaDeLanca() {
               <div className={styles.vazio}>Nenhuma conversa salva ainda.</div>
             )}
             {conversas.map(conv => (
-              <div key={conv.id} className={styles.conversaCard}>
-                <div className={styles.conversaInfo} onClick={() => carregarConversa(conv)}>
-                  <div className={styles.conversaNome}>{conv.nome_lead || 'Lead sem nome'}</div>
-                  <div className={styles.conversaNicho}>{conv.nicho}</div>
-                  <div className={styles.conversaMeta}>
-                    {role === 'admin' && <span className={styles.conversaUsuario}>{conv.nome_usuario}</span>}
-                    <span className={styles.conversaEtapa}>Etapa {conv.etapa_atual} — {NOMES_ETAPAS[conv.etapa_atual] || 'Não iniciado'}</span>
-                    <span className={styles.conversaData}>{new Date(conv.atualizado_em).toLocaleDateString('pt-BR')}</span>
+              <div key={conv.id}>
+                <div className={styles.conversaCard}>
+                  <div className={styles.conversaInfo} onClick={() => carregarConversa(conv)}>
+                    <div className={styles.conversaNome}>{conv.nome_lead || 'Lead sem nome'}</div>
+                    <div className={styles.conversaNicho}>{conv.nicho}</div>
+                    <div className={styles.conversaMeta}>
+                      {role === 'admin' && <span className={styles.conversaUsuario}>{conv.nome_usuario}</span>}
+                      <span className={styles.conversaEtapa}>Etapa {conv.etapa_atual} — {NOMES_ETAPAS[conv.etapa_atual] || 'Não iniciado'}</span>
+                      <span className={styles.conversaData}>{new Date(conv.atualizado_em).toLocaleDateString('pt-BR')}</span>
+                    </div>
                   </div>
+                  <button
+                    className={styles.btnWiki + (wikiStatus?.id === conv.id ? ' ' + styles.btnWikiSalvo : '')}
+                    onClick={(e) => { e.stopPropagation(); salvarNoWiki(conv) }}
+                    disabled={salvandoWiki === conv.id}
+                  >
+                    {salvandoWiki === conv.id ? 'Salvando...'
+                      : wikiStatus?.id === conv.id ? (wikiStatus.mode === 'fs' ? '✓ Salvo' : '↓ Baixado')
+                      : 'Salvar no wiki'}
+                  </button>
+                  <button className={styles.btnDeletar} onClick={() => deletarConversa(conv.id)}>✕</button>
                 </div>
-                <button className={styles.btnDeletar} onClick={() => deletarConversa(conv.id)}>✕</button>
+                {wikiStatus?.id === conv.id && wikiStatus.mode === 'download' && (
+                  <div className={styles.wikiAviso}>Salvo em ~/Downloads. Mova para ~/alphaops-wiki/raw/conversas/</div>
+                )}
               </div>
             ))}
           </div>
