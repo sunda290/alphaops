@@ -79,4 +79,9 @@
 .conversaData{font-family:var(--font-mono);font-size:9px;color:var(--smoke);letter-spacing:0.06em;}
 .btnDeletar{font-family:var(--font-mono);font-size:11px;color:var(--smoke);background:none;border:none;padding:16px 20px;cursor:pointer;transition:color 0.2s;flex-shrink:0;}
 .btnDeletar:hover{color:var(--red);}
+.btnWiki{font-family:var(--font-mono);font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--black);background:var(--gold);border:none;padding:6px 14px;cursor:pointer;transition:background 0.2s;flex-shrink:0;margin-right:4px;}
+.btnWiki:hover:not(:disabled){background:var(--green-br);}
+.btnWiki:disabled{opacity:0.5;cursor:not-allowed;}
+.btnWikiSalvo{background:var(--green-br) !important;}
+.wikiAviso{font-family:var(--font-mono);font-size:10px;color:var(--gold);padding:8px 20px;background:rgba(201,168,76,0.05);border:1px solid rgba(201,168,76,0.2);border-top:none;letter-spacing:0.04em;}
 @media(max-width:768px){.camposGrid{grid-template-columns:1fr;}.abas{overflow-x:auto;}.topBar{flex-direction:column;gap:12px;}.roteiroAcoes{flex-direction:column;}}

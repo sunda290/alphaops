@@ -1,6 +1,7 @@
 'use client'
 import { useState, useEffect } from 'react'
 import NavInterno from '@/components/layout/NavInterno'
+import { saveToWikiFolder, slugify } from '@/lib/wiki-export'
 import styles from './assistente.module.css'
 
 const OBJETIVOS = [
@@ -28,6 +29,32 @@ interface Conversa {
   atualizado_em: string
 }
 
+function formatarDiagnosticoParaMarkdown(nome: string, segmento: string, resposta: string): string {
+  const slugCliente = slugify(nome || '')
+  const data = new Date()
+  const dataYmd = data.toISOString().slice(0, 10)
+  const dataPtBr = data.toLocaleDateString('pt-BR')
+
+  return [
+    '---',
+    'type: proposal',
+    `cliente: ${slugCliente}`,
+    `data: ${dataYmd}`,
+    'status: rascunho',
+    `segmento: ${segmento || ''}`,
+    '---',
+    '',
+    `# Diagnóstico — ${nome || 'Lead sem nome'}`,
+    '',
+    `**Segmento:** ${segmento || ''}`,
+    `**Gerado em:** ${dataPtBr}`,
+    '',
+    '---',
+    '',
+    resposta || '',
+  ].join('\n')
+}
+
 export default function Assistente() {
   const [mensagem, setMensagem] = useState('')
   const [nome, setNome] = useState('')
@@ -37,6 +64,8 @@ export default function Assistente() {
   const [resposta, setResposta] = useState('')
   const [loading, setLoading] = useState(false)
   const [copied, setCopied] = useState(false)
+  const [salvandoWiki, setSalvandoWiki] = useState(false)
+  const [wikiStatus, setWikiStatus] = useState<'fs' | 'download' | null>(null)
   const [historico, setHistorico] = useState<{nome:string,preview:string,resposta:string,time:string}[]>([])
   const [conversas, setConversas] = useState<Conversa[]>([])
   const [conversaSelecionada, setConversaSelecionada] = useState<string>('')
@@ -105,6 +134,21 @@ export default function Assistente() {
     navigator.clipboard.writeText(resposta)
     setCopied(true)
     setTimeout(() => setCopied(false), 2000)
+  }
+
+  async function salvarNoWiki() {
+    const slug = slugify(nome || '')
+    const data = new Date()
+    const filename = `${data.toISOString().slice(0, 10)}-${slug}-diagnostico.md`
+    const content = formatarDiagnosticoParaMarkdown(nome, segmento, resposta)
+    setSalvandoWiki(true)
+    try {
+      const result = await saveToWikiFolder('propostas', filename, content)
+      setWikiStatus(result.mode)
+      setTimeout(() => setWikiStatus(null), result.mode === 'fs' ? 2000 : 5000)
+    } finally {
+      setSalvandoWiki(false)
+    }
   }
 
   const conversaSel = conversas.find(c => c.id === conversaSelecionada)
@@ -230,9 +274,23 @@ export default function Assistente() {
                 {objetivo === 'diagnostico' ? 'Diagnóstico gerado' : 'Resposta gerada'}
               </div>
               {resposta && (
-                <button className={`${styles.btnCopy} ${copied ? styles.btnCopied : ''}`} onClick={copiar}>
-                  {copied ? '✓ Copiado' : 'Copiar'}
-                </button>
+                <div style={{display:'flex', gap:8, alignItems:'center'}}>
+                  {objetivo === 'diagnostico' && (
+                    <button
+                      className={`${styles.btnWiki} ${wikiStatus ? styles.btnWikiSalvo : ''}`}
+                      onClick={salvarNoWiki}
+                      disabled={salvandoWiki}
+                    >
+                      {salvandoWiki ? 'Salvando...'
+                        : wikiStatus === 'fs' ? '✓ Salvo'
+                        : wikiStatus === 'download' ? '↓ Baixado'
+                        : 'Salvar no wiki'}
+                    </button>
+                  )}
+                  <button className={`${styles.btnCopy} ${copied ? styles.btnCopied : ''}`} onClick={copiar}>
+                    {copied ? '✓ Copiado' : 'Copiar'}
+                  </button>
+                </div>
               )}
             </div>
             {loading ? (
@@ -242,6 +300,9 @@ export default function Assistente() {
               </div>
             ) : (
               <div className={styles.outputBox}>{resposta}</div>
+            )}
+            {wikiStatus === 'download' && (
+              <div className={styles.wikiAviso}>Salvo em ~/Downloads. Mova para ~/alphaops-wiki/raw/propostas/</div>
             )}
           </div>
         )}
