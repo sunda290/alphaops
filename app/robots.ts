@@ -1,8 +1,14 @@
-import type { MetadataRoute } from 'next'
+import { MetadataRoute } from 'next'
 
 export default function robots(): MetadataRoute.Robots {
   return {
-    rules: { userAgent: '*', allow: '/' },
+    rules: [
+      {
+        userAgent: '*',
+        allow: '/',
+        disallow: ['/admin', '/demo', '/api', '/login', '/signup', '/ponta-de-lanca', '/assistente'],
+      },
+    ],
     sitemap: 'https://alphaops.cloud/sitemap.xml',
   }
 }
