@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "google-flights": {
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "-y",
+        "google-flights-mcp"
+      ],
+      "env": {}
+    }
+  }
+}
