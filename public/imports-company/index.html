@@ -98,10 +98,18 @@
   .cta:active{transform:scale(.97)}
   .cta.sec{background:transparent;color:var(--navy);border:1px solid var(--navy);margin-left:8px}
 
+  .preco .cheio{color:#9da2bd;font-size:22px;font-weight:600;text-decoration:line-through;text-decoration-thickness:2px;margin-right:10px}
+  .parcelas s{display:block;font-size:13px;color:#8d92ae;margin-bottom:2px}
+  .riscado{text-decoration:line-through;color:var(--muted);font-weight:500;font-size:.6em;margin-right:6px}
+  .jornada{list-style:none;display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:16px;counter-reset:j}
+  .jornada li{counter-increment:j;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px;font-size:14px;font-weight:500}
+  .jornada li::before{content:counter(j) " · ";color:var(--gold);font-weight:600}
+  .jornada li:last-child{background:var(--green-soft);border-color:#bfe3cf}
   footer{padding:36px 0 56px;border-top:1px solid var(--line);font-size:13px;color:var(--muted)}
 
   @media (max-width:680px){
     .resumo,.lista,.parcelas{grid-template-columns:1fr}
+    .jornada{grid-template-columns:1fr 1fr}
     .fotos{grid-template-columns:repeat(2,1fr)}
     .tabela{font-size:14px}
     .tabela th,.tabela td{padding:11px 12px}
@@ -147,12 +155,19 @@
     <div class="resumo">
       <div class="card"><div class="num">12 entregas</div><div class="rot">O que falta para o protótipo virar o sistema de vocês</div></div>
       <div class="card"><div class="num">8 semanas</div><div class="rot">Com entrega toda semana pra vocês acompanharem</div></div>
-      <div class="card"><div class="num">R$ 9.900</div><div class="rot">Preço de projeto piloto, parcelado durante a obra</div></div>
+      <div class="card"><div class="num"><span class="riscado">R$ 19.900</span>R$ 9.900</div><div class="rot">Preço de projeto piloto, metade do valor cheio</div></div>
     </div>
   </section>
 
   <section>
-    <div class="eyebrow">1 · O que já existe</div>
+    <div class="eyebrow">1 · O que vocês vivem hoje</div>
+    <h2>A ferramenta chegou no limite</h2>
+    <p>A operação roda 100% no WhatsApp: fotos das malas nos grupos, cliente misturado no nome do produto, "cadê meu pedido?" o dia inteiro e nenhum controle de custo, lucro ou estoque.</p>
+    <p>Nada disso é culpa de vocês. Três anos de mercado pedem uma casa própria, simples do jeito que vocês pediram: <b>"olhou, gostou, comprou, passou o cartão, tchau."</b></p>
+  </section>
+
+  <section>
+    <div class="eyebrow">2 · O que já existe</div>
     <h2>Vocês já viram funcionando</h2>
     <p>O protótipo está no ar com os <b>produtos reais do grupo de vocês</b>. Ele não é cobrado de novo, é o ponto de partida:</p>
     <div class="ja">
@@ -166,74 +181,89 @@
       <span class="tag">Frete incluso no preço</span>
     </div>
     <a class="cta sec" style="margin-left:0" href="https://imports-company.vercel.app" target="_blank" rel="noopener">Abrir o protótipo ↗</a>
-    <p class="small muted" style="margin-top:14px">Sendo transparente: no protótipo, o <b>pagamento</b> e a <b>IA</b> ainda são simulados. No projeto, os dois passam a funcionar de verdade.</p>
+    <p class="small muted" style="margin-top:14px">Sendo transparente: no protótipo, o <b>pagamento</b> e a <b>IA</b> ainda são simulados (é uma demonstração). No projeto, os dois passam a funcionar de verdade: pagamento real pelo Mercado Pago e Pix, e IA que lê a foto e preenche o cadastro. Prefiro combinar isso agora a prometer o que ainda não está pronto.</p>
   </section>
 
   <section>
-    <div class="eyebrow">2 · O que eu vou fazer</div>
+    <div class="eyebrow">3 · O que eu vou fazer</div>
     <h2>O que entra no projeto</h2>
-    <p class="muted">Escopo fechado: o que está aqui é o que entra. Foi a indecisão de escopo que travou o site anterior, e aqui ela não acontece.</p>
+    <p class="muted">Escopo fechado: o que está aqui é o que entra.</p>
     <div class="lista">
-      <div class="card"><h3>Cadastro por foto com IA</h3><p>Você fotografa a peça e o sistema preenche nome, marca, categoria e sugere o preço. Fim do cadastro manual.</p></div>
-      <div class="card"><h3>Cotação do dólar do dia</h3><p>Mudou o câmbio, atualiza tudo de uma vez. Desconto em lote em vários produtos.</p></div>
-      <div class="card"><h3>Lucro por peça</h3><p>Custo, câmbio, frete e taxa do cartão viram lucro e preço sugerido, sem planilha.</p></div>
-      <div class="card"><h3>Estoque</h3><p>Pronta entrega e encomenda separados, com baixa automática quando vende.</p></div>
-      <div class="card"><h3>Pagamento Pix e cartão</h3><p>Mercado Pago com Pix e cartão parcelado. O cliente paga e pronto.</p></div>
+      <div class="card"><h3>Cadastro por foto com IA</h3><p>Você fotografa a peça e a IA preenche marca, modelo, SKU, categoria e sugere o preço. Fim da planilha e do cadastro manual.</p></div>
+      <div class="card"><h3>Cotação do dólar do dia</h3><p>Mudou o câmbio, você atualiza tudo num campo só. Desconto em lote em vários produtos de uma vez.</p></div>
+      <div class="card"><h3>Ficha financeira por peça</h3><p>Custo, cotação, frete e taxa do cartão viram lucro e sugestão de preço, automático. O controle que vocês faziam e pararam por cansaço, agora sem esforço.</p></div>
+      <div class="card"><h3>Estoque</h3><p>Pronta entrega (loja física) e encomenda pro Brasil separados, com baixa automática quando vende.</p></div>
+      <div class="card"><h3>Pagamento Pix e cartão</h3><p>Mercado Pago com Pix e cartão parcelado. O cliente passa o cartão e pronto.</p></div>
       <div class="card"><h3>Aviso de venda</h3><p>Vendeu, a equipe recebe aviso no WhatsApp e no e-mail na hora.</p></div>
-      <div class="card"><h3>Equipe com permissões</h3><p>Admin, gerente e vendedora: cada um vê e mexe só no que precisa.</p></div>
+      <div class="card"><h3>Níveis de acesso</h3><p>Admin, gerente e vendedora: cada um com a sua permissão, vendo e mexendo só no que precisa.</p></div>
       <div class="card"><h3>Pedidos e data de envio</h3><p>A equipe muda a etapa do pedido e a data prevista de envio aparece na suíte do cliente.</p></div>
-      <div class="card"><h3>Aprovação de clientes e login seguro</h3><p>Vocês aprovam quem entra na loja. Login com código de confirmação.</p></div>
+      <div class="card"><h3>Loja fechada e login seguro</h3><p>Só cliente cadastrado entra, e vocês aprovam quem entra. Código de confirmação (2FA) no login pra proteger a conta.</p></div>
       <div class="card"><h3>Ajuda dentro do sistema</h3><p>Passo a passo em cada tela, pra ninguém da equipe ficar perdido.</p></div>
-      <div class="card"><h3>Treinamento da equipe</h3><p>Duas sessões ao vivo e vídeos curtos. Treinamento é entrega, não favor.</p></div>
+      <div class="card"><h3>Treinamento da equipe toda</h3><p>Duas sessões ao vivo e vídeos curtos. Treinamento é entrega, não favor.</p></div>
       <div class="card"><h3>No ar no domínio de vocês</h3><p>Domínio próprio, segurança, backup e importação dos clientes da loja física.</p></div>
     </div>
   </section>
 
   <section>
-    <div class="eyebrow">3 · Quanto tempo</div>
+    <div class="eyebrow">4 · A jornada do pedido</div>
+    <h2>O cliente acompanha sozinho</h2>
+    <p>Nove etapas, do pedido confirmado até a entrega. O cliente vê tudo na suíte dele, e vocês não precisam mais responder "cadê meu pedido?" um por um.</p>
+    <ol class="jornada">
+      <li>Pedido Confirmado</li><li>Em Separação</li><li>Aguardando Envio Internacional</li>
+      <li>Em Trânsito Internacional</li><li>No Brasil</li><li>Envio Nacional Solicitado</li>
+      <li>Etiqueta Gerada</li><li>Em Trânsito Nacional</li><li>Entregue</li>
+    </ol>
+  </section>
+
+  <section>
+    <div class="eyebrow">5 · Quanto tempo</div>
     <h2>8 semanas, com entrega toda semana</h2>
-    <p>Nada de sumir por dois meses. Toda semana vocês veem o que ficou pronto numa conversa rápida.</p>
+    <p>Nada de sumir por dois meses e voltar com surpresa. Toda semana vocês veem o que ficou pronto numa conversa rápida.</p>
     <table class="tabela">
       <thead><tr><th>Semana</th><th>O que fica pronto</th></tr></thead>
       <tbody>
         <tr><td>1 – 2</td><td>Escopo assinado · domínio · aprovação de clientes · login seguro · etapas do pedido pela equipe</td></tr>
-        <tr><td>3 – 4</td><td>Cadastro por foto com IA · cotação do dólar · lucro por peça</td></tr>
-        <tr><td>5 – 6</td><td>Estoque · permissões da equipe · aviso de venda · pagamento Pix e cartão</td></tr>
+        <tr><td>3 – 4</td><td>Cadastro por foto com IA · cotação do dólar · ficha financeira</td></tr>
+        <tr><td>5 – 6</td><td>Estoque · níveis de acesso · aviso de venda · pagamento Pix e cartão</td></tr>
         <tr><td>7</td><td>Ajuda dentro do sistema · testes com os produtos reais de vocês</td></tr>
-        <tr><td>8</td><td>Treinamento da equipe · loja no ar no domínio de vocês</td></tr>
+        <tr><td>8</td><td>Treinamento da equipe toda · loja no ar no domínio de vocês</td></tr>
       </tbody>
     </table>
     <p class="small muted" style="margin-top:12px">Da parte de vocês, na semana 1: me passar o status do domínio antigo (reaproveitar ou registrar um novo).</p>
   </section>
 
   <section>
-    <div class="eyebrow">4 · Quanto custa</div>
+    <div class="eyebrow">6 · Quanto custa</div>
     <h2>Preço de projeto piloto</h2>
-    <p>Vocês vão ser o <b>primeiro cliente</b> desse sistema. Por isso o preço é de custo: cobre o meu tempo de trabalho, sem margem de lucro em cima de vocês.</p>
+    <p>Vocês vão ser o <b>primeiro cliente</b> desse sistema. Por isso o preço é metade do valor cheio: cobre o meu tempo de trabalho, sem margem de lucro em cima de vocês.</p>
 
     <div class="preco">
       <div class="eyebrow">Desenvolvimento completo</div>
+      <div><span class="cheio">R$ 19.900</span></div>
       <div class="valor">R$ 9.900</div>
-      <div class="antes">Valor da proposta de agosto: <s>R$ 19.900</s> · metade, por ser piloto</div>
+      <div class="antes">50% de desconto por ser o projeto piloto</div>
       <div class="parcelas">
-        <div><b>R$ 3.960</b><span>Entrada (40%) · começo na hora</span></div>
-        <div><b>3× R$ 1.980</b><span>Mensais, durante as 8 semanas</span></div>
+        <div><s>R$ 7.960</s><b>R$ 3.960</b><span>Entrada (40%), na assinatura. O trabalho começa na mesma semana.</span></div>
+        <div><s>3× R$ 3.980</s><b>3× R$ 1.980</b><span>Saldo em 3 parcelas: 30, 60 e 90 dias depois da entrada.</span></div>
       </div>
     </div>
 
     <div class="card" style="margin-top:12px">
       <div class="mensal">
         <div>
-          <div class="eyebrow" style="margin-bottom:6px">Depois que a loja estiver no ar</div>
+          <div class="eyebrow" style="margin-bottom:6px">Mensalidade · só depois que a loja estiver no ar</div>
           <div class="valor-m">R$ 300<small>/mês</small></div>
         </div>
-        <p class="small muted" style="max-width:420px">Tudo incluso: servidor, banco de dados, login, IA do cadastro, avisos de venda, atualizações e eu de suporte. É metade dos R$ 600 que vocês pagavam, e agora com o servidor incluso.</p>
+        <p class="small muted" style="max-width:420px">Tudo incluso: servidor, banco de dados, login, IA do cadastro, avisos de venda, atualizações, correções e eu de plantão se precisar. É metade dos R$ 600 que vocês pagavam antes, e agora com o servidor incluso.</p>
       </div>
     </div>
 
-    <h3 style="margin-top:26px">Fica por conta de vocês</h3>
+    <h3 style="margin-top:26px">E a manutenção do dia a dia?</h3>
+    <p>Trocar preço, produto, foto ou cotação, <b>vocês mesmos fazem em segundos</b>, porque a IA automatiza o trabalho pesado. Não tem trabalho manual diário e vocês não dependem de mim pra isso. A mensalidade é só pra garantir que nada quebre.</p>
+
+    <h3 style="margin-top:26px">Fica por conta de vocês (pago direto, sem passar por mim)</h3>
     <ul class="checks fora">
-      <li>Taxas do Mercado Pago em cada venda (cobradas direto pelo Mercado Pago, não passam por mim)</li>
+      <li>Taxas do Mercado Pago em cada venda (Pix quase zero, cartão conforme o parcelamento)</li>
       <li>Registro do domínio, cerca de R$ 40 por ano</li>
     </ul>
 
@@ -245,13 +275,15 @@
         <tr><td>Freelancer em Ipatinga</td><td class="dir">R$ 11 – 22 mil</td></tr>
         <tr><td>Agência no Brasil</td><td class="dir">R$ 25 – 50 mil</td></tr>
         <tr><td>Freelancer em Toronto</td><td class="dir">R$ 50 – 87 mil</td></tr>
+        <tr><td>Imports Company · valor cheio</td><td class="dir"><s>R$ 19.900</s></td></tr>
         <tr class="destaque"><td>Imports Company · piloto</td><td class="dir">R$ 9.900</td></tr>
       </tbody>
     </table>
+    <p class="small muted" style="margin-top:10px">O protótipo já existir é o que deixa o valor nesse patamar.</p>
   </section>
 
   <section>
-    <div class="eyebrow">5 · O combinado do piloto</div>
+    <div class="eyebrow">7 · O combinado do piloto</div>
     <h2>O que eu peço em troca</h2>
     <p>O desconto de piloto vem com quatro combinados simples, que vão no contrato:</p>
     <ul class="checks">
@@ -263,18 +295,32 @@
   </section>
 
   <section>
-    <div class="eyebrow">6 · Por que agora vai dar certo</div>
+    <div class="eyebrow">8 · Garantia anti-fracasso</div>
     <h2>O que travou da última vez não se repete</h2>
+    <p>Sei como foi com o site anterior. Por isso, compromissos por escrito:</p>
     <div class="lista">
-      <div class="card"><h3>Escopo fechado</h3><p>Está tudo nesta página. O que entra está definido antes de começar.</p></div>
-      <div class="card"><h3>Sem cadastro manual</h3><p>A IA preenche o produto pela foto. A dor nº 1 do site anterior deixa de existir.</p></div>
-      <div class="card"><h3>Equipe treinada</h3><p>O treinamento está no cronograma, na semana 8, e tem ajuda dentro do sistema.</p></div>
-      <div class="card"><h3>Vocês acompanham</h3><p>Entrega toda semana. Vocês veem o sistema crescer, não uma surpresa no final.</p></div>
+      <div class="card"><h3>Escopo fechado antes de começar</h3><p>A indecisão foi o que travou o site anterior. Aqui, o que está nesta página é o que entra.</p></div>
+      <div class="card"><h3>IA acaba com o cadastro de SKU</h3><p>A dor nº 1 da última vez, a planilha manual, simplesmente deixa de existir.</p></div>
+      <div class="card"><h3>Treinamento é entrega</h3><p>A equipe toda sai sabendo usar. Está no cronograma, na semana 8, e tem ajuda dentro do sistema.</p></div>
+      <div class="card"><h3>Vocês acompanham</h3><p>Entrega toda semana. Vocês veem o sistema crescer, sem surpresa no final.</p></div>
     </div>
   </section>
 
   <section>
-    <div class="eyebrow">7 · Próximos passos</div>
+    <div class="eyebrow">9 · Depois do piloto</div>
+    <h2>Fase 2 (fora deste escopo)</h2>
+    <p class="muted">Ideias que vieram da nossa conversa e podem entrar depois, com orçamento à parte:</p>
+    <ul class="checks fora">
+      <li>Link de "venda ao vivo" direto do outlet</li>
+      <li>Aplicativo nas lojas da Apple e do Google</li>
+      <li>Pagamento pelo Square, no Canadá</li>
+      <li>Etiqueta de envio automática (Melhor Envio)</li>
+      <li>Aviso de venda por SMS e relatórios</li>
+    </ul>
+  </section>
+
+  <section>
+    <div class="eyebrow">10 · Próximos passos</div>
     <h2>Como começamos</h2>
     <ol class="passos">
       <li>A Ariadne termina de olhar, e marcamos 20 minutos pra eu tirar as dúvidas dela.</li>
