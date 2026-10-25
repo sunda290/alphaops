@@ -1,0 +1,382 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Proposta Comercial | Nikiti On Ice | AlphaOps</title>
+<meta name="description" content="Proposta comercial AlphaOps para a plataforma de vendas e entregas Nikiti On Ice.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0B1530; --ink-2:#3A4560; --muted:#6B7590; --line:#E3E7EF; --bg:#FFFFFF; --soft:#F5F7FB;
+  --brand:#1E5BFF; --brand-soft:#EAF0FF; --accent:#FF7200; --ok:#2E9B50;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--soft);color:var(--ink);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;font-size:16px;line-height:1.6}
+.wrap{max-width:880px;margin:0 auto;padding:0 16px}
+header.hero{background:var(--ink);color:#fff;padding:40px 0 56px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:-.02em;font-size:20px}
+.brand-mark{width:32px;height:32px;border-radius:8px;background:var(--brand);display:grid;place-items:center;font-size:16px}
+.brand small{font-weight:500;color:#AEB8D0;font-size:13px;margin-left:6px}
+.hero h1{font-size:clamp(28px,5vw,42px);line-height:1.15;letter-spacing:-.02em;margin:40px 0 12px;font-weight:800}
+.hero p.sub{color:#C9D2E6;font-size:18px;margin:0 0 28px;max-width:640px}
+.meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px}
+.meta div{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:12px 14px}
+.meta span{display:block;font-size:12px;color:#AEB8D0;text-transform:uppercase;letter-spacing:.06em}
+.meta strong{font-size:15px;font-weight:600}
+main{margin-top:-28px}
+.card{background:var(--bg);border:1px solid var(--line);border-radius:16px;padding:32px 28px;margin-bottom:20px}
+h2{font-size:24px;letter-spacing:-.01em;margin:0 0 6px;font-weight:700}
+h2 .n{color:var(--brand);margin-right:8px}
+h3{font-size:17px;margin:24px 0 8px;font-weight:600}
+.lead{font-size:18px;color:var(--ink-2);margin:0 0 20px}
+p{margin:0 0 14px}
+ul,ol{padding-left:22px;margin:0 0 14px}
+li{margin:4px 0}
+a{color:var(--brand)}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin:8px 0 4px}
+.kpi{background:var(--soft);border-radius:12px;padding:16px}
+.kpi span{display:block;font-size:13px;color:var(--muted)}
+.kpi strong{display:block;font-size:22px;font-weight:700;letter-spacing:-.01em}
+.tbl{width:100%;overflow-x:auto;margin:8px 0 16px}
+table{width:100%;border-collapse:collapse;font-size:15px}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:13px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);font-weight:600;background:var(--soft)}
+td.num,th.num{text-align:right;white-space:nowrap}
+tr.total td{font-weight:700;border-top:2px solid var(--ink)}
+.phases{display:grid;gap:14px}
+.phase{border:1px solid var(--line);border-radius:12px;padding:18px 20px}
+.phase header{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:6px}
+.phase h3{margin:0}
+.tag{font-size:13px;color:var(--brand);background:var(--brand-soft);border-radius:999px;padding:3px 10px;font-weight:600;white-space:nowrap}
+.phase.muted{background:var(--soft)}
+.models{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;margin-top:8px}
+.model{border:1px solid var(--line);border-radius:14px;padding:20px}
+.model.b{border:2px solid var(--brand)}
+.model .price{font-size:28px;font-weight:800;letter-spacing:-.02em;margin:6px 0 2px}
+.model .price small{font-size:14px;font-weight:500;color:var(--muted)}
+.ref{background:var(--brand-soft);border-radius:12px;padding:14px 16px;font-size:15px;margin:4px 0 18px}
+.steps{counter-reset:s;list-style:none;padding:0}
+.steps li{counter-increment:s;position:relative;padding-left:44px;margin:12px 0}
+.steps li::before{content:counter(s);position:absolute;left:0;top:0;width:30px;height:30px;border-radius:50%;background:var(--ink);color:#fff;display:grid;place-items:center;font-weight:700;font-size:14px}
+figure{margin:12px 0 8px}
+figure svg{width:100%;height:auto;display:block}
+figcaption{font-size:14px;color:var(--muted);margin-top:8px}
+.note{font-size:14px;color:var(--muted)}
+.cta{background:var(--ink);color:#fff;border:none}
+.cta h2{color:#fff}
+.cta .steps li::before{background:var(--accent)}
+.cta a.btn{display:inline-block;background:var(--accent);color:#fff;text-decoration:none;font-weight:700;padding:14px 22px;border-radius:12px;margin:8px 8px 0 0}
+.cta a.btn.ghost{background:transparent;border:1px solid rgba(255,255,255,.35)}
+footer{padding:28px 0 48px;color:var(--muted);font-size:14px;text-align:center}
+@media (max-width:560px){.card{padding:24px 18px}th,td{padding:8px}}
+@media print{
+  body{background:#fff}
+  header.hero{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  main{margin-top:0}
+  .card{break-inside:avoid;border:none;padding:16px 0}
+  .cta{background:#fff;color:var(--ink)} .cta h2{color:var(--ink)} .cta a.btn{display:none}
+}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="brand"><span class="brand-mark">α</span>AlphaOps <small>alphaops.cloud</small></div>
+    <h1>Plataforma de Vendas e Entregas Nikiti On Ice</h1>
+    <p class="sub">Proposta comercial para desenvolvimento da loja, backoffice, app do entregador e integrações, em 3 fases.</p>
+    <div class="meta">
+      <div><span>Cliente</span><strong>Nikiti On Ice, Niterói/RJ</strong></div>
+      <div><span>Data</span><strong>25/10/2026</strong></div>
+      <div><span>Validade</span><strong>Até 08/11/2026</strong></div>
+      <div><span>Base</span><strong>Especificação Funcional V2</strong></div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+<section class="card">
+  <h2><span class="n">01</span>Sumário executivo</h2>
+  <p class="lead">A AlphaOps propõe entregar a plataforma digital da Nikiti On Ice em 3 fases e 19 semanas, com a loja vendendo já na semana 8.</p>
+  <div class="kpis">
+    <div class="kpi"><span>Prazo total</span><strong>19 semanas</strong></div>
+    <div class="kpi"><span>Loja no ar</span><strong>Semana 8</strong></div>
+    <div class="kpi"><span>Modelo A</span><strong>R$ 82.500</strong></div>
+    <div class="kpi"><span>Modelo B</span><strong>R$ 45.375</strong></div>
+  </div>
+  <p style="margin-top:18px">A plataforma cobre o ciclo completo do pedido de gelo: compra pelo celular em 4 telas, pagamento, reserva de estoque, roteirização, rastreamento da entrega e relacionamento com o cliente. Garantia de 90 dias por fase após o aceite.</p>
+  <h3>Partes</h3>
+  <ul>
+    <li><strong>Cliente:</strong> Nikiti On Ice, Niterói/RJ</li>
+    <li><strong>Fornecedor:</strong> AlphaOps, André Oliveira (<a href="mailto:andre@alphaops.cloud">andre@alphaops.cloud</a>)</li>
+    <li><strong>Indicação:</strong> Marcelo, RHF Talentos</li>
+  </ul>
+  <h3>Sobre a AlphaOps</h3>
+  <p>Consultoria de software que desenvolve e opera produtos SaaS B2B para pequenas e médias empresas no Brasil e no Canadá. Projetos com pagamentos, automação de atendimento por WhatsApp e plataformas multiempresa.</p>
+</section>
+
+<section class="card">
+  <h2><span class="n">02</span>Premissas alinhadas</h2>
+  <p class="lead">Quatro decisões já tomadas com a Nikiti orientam o escopo e o preço.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>Tema</th><th>Decisão</th><th>Efeito na proposta</th></tr></thead>
+    <tbody>
+      <tr><td>Revenda a outros distribuidores</td><td>Mantida, sem prioridade agora</td><td>O sistema nasce preparado para várias empresas. O módulo de revenda fica para uma fase futura.</td></tr>
+      <tr><td>Propriedade da plataforma</td><td>A definir entre os modelos A e B</td><td>Ver seção Investimento.</td></tr>
+      <tr><td>Nota fiscal</td><td>Emissão quando o cliente pedir, lançada pelo sistema</td><td>NF-e/NFC-e na Fase 3. Reduz a necessidade de BPO financeiro.</td></tr>
+      <tr><td>Formas de pagamento</td><td>Pix e crédito obrigatórios. Débito conforme demanda</td><td>Débito fica fora do MVP, como módulo opcional.</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section class="card">
+  <h2><span class="n">03</span>Solução proposta</h2>
+  <p class="lead">Três interfaces compartilham um único núcleo, que é a fonte operacional do pedido.</p>
+  <figure>
+    <svg viewBox="0 0 760 392" role="img" aria-label="Arquitetura da plataforma" font-family="Inter,system-ui,sans-serif" font-size="13">
+      <defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#9AA3B8"/></marker></defs>
+      <text x="24" y="34" font-size="15" font-weight="700" fill="#0B1530">O pedido nasce na loja e alimenta toda a operação</text>
+      <g fill="none" stroke="#9AA3B8" stroke-width="1.25">
+        <path d="M132 144V184" marker-start="url(#ar)" marker-end="url(#ar)"/><path d="M368 144V184" marker-start="url(#ar)" marker-end="url(#ar)"/><path d="M604 144V184" marker-start="url(#ar)" marker-end="url(#ar)"/>
+        <path d="M86 240V280" marker-start="url(#ar)" marker-end="url(#ar)"/><path d="M226 240V280" marker-start="url(#ar)" marker-end="url(#ar)"/><path d="M366 240V280" marker-start="url(#ar)" marker-end="url(#ar)"/><path d="M506 240V280" marker-start="url(#ar)" marker-end="url(#ar)"/><path d="M646 240V280" marker-start="url(#ar)" marker-end="url(#ar)"/>
+      </g>
+      <g text-anchor="middle">
+        <rect x="24" y="72" width="216" height="72" rx="8" fill="#fff" stroke="#C9CFDC"/><text x="132" y="96" font-weight="600" fill="#0B1530">Loja (PWA)</text><text x="132" y="112" font-size="11.5" fill="#6B7590">Cliente compra em 4 telas</text><text x="132" y="128" font-size="11.5" fill="#6B7590">Pix e crédito, sem cadastro</text>
+        <rect x="260" y="72" width="216" height="72" rx="8" fill="#fff" stroke="#C9CFDC"/><text x="368" y="96" font-weight="600" fill="#0B1530">Backoffice da Nikiti</text><text x="368" y="112" font-size="11.5" fill="#6B7590">Preço, estoque e pedidos</text><text x="368" y="128" font-size="11.5" fill="#6B7590">Rotas e entregadores</text>
+        <rect x="496" y="72" width="216" height="72" rx="8" fill="#fff" stroke="#C9CFDC"/><text x="604" y="96" font-weight="600" fill="#0B1530">App do entregador</text><text x="604" y="112" font-size="11.5" fill="#6B7590">Rota do dia e GPS</text><text x="604" y="128" font-size="11.5" fill="#6B7590">Botão Entrega efetuada</text>
+        <rect x="24" y="184" width="688" height="56" rx="8" fill="#EAF0FF" stroke="#1E5BFF" stroke-width="2"/><text x="368" y="208" font-weight="600" fill="#0B1530">Núcleo da plataforma: API Node.js e PostgreSQL</text><text x="368" y="224" font-size="11.5" fill="#0B1530">Pedidos, reserva de estoque contra sobrevenda, roteirização e histórico</text>
+        <rect x="24" y="280" width="124" height="56" rx="8" fill="#fff" stroke="#C9CFDC"/><text x="86" y="304" font-weight="600" fill="#0B1530">Gateway</text><text x="86" y="320" font-size="11.5" fill="#6B7590">Pix e cartão</text>
+        <rect x="164" y="280" width="124" height="56" rx="8" fill="#fff" stroke="#C9CFDC"/><text x="226" y="304" font-weight="600" fill="#0B1530">WhatsApp</text><text x="226" y="320" font-size="11.5" fill="#6B7590">API oficial Meta</text>
+        <rect x="304" y="280" width="124" height="56" rx="8" fill="#fff" stroke="#C9CFDC"/><text x="366" y="304" font-weight="600" fill="#0B1530">Google Maps</text><text x="366" y="320" font-size="11.5" fill="#6B7590">Rotas e endereços</text>
+        <rect x="444" y="280" width="124" height="56" rx="8" fill="#fff" stroke="#C9CFDC"/><text x="506" y="304" font-weight="600" fill="#0B1530">Agendor CRM</text><text x="506" y="320" font-size="11.5" fill="#6B7590">Clientes</text>
+        <rect x="584" y="280" width="124" height="56" rx="8" fill="#fff" stroke="#C9CFDC"/><text x="646" y="304" font-weight="600" fill="#0B1530">Emissor NF-e</text><text x="646" y="320" font-size="11.5" fill="#6B7590">Notas fiscais</text>
+      </g>
+      <text x="24" y="372" font-size="11.5" fill="#6B7590">Integrações desacopladas: cada fornecedor pode ser trocado sem refazer o sistema</text>
+    </svg>
+    <figcaption>O núcleo reserva o estoque no momento do pagamento, o que impede vender gelo que não existe, e repassa o pedido para rotas, mensagens e CRM sem redigitação.</figcaption>
+  </figure>
+  <p class="note">Backend em Node.js com PostgreSQL, loja em PWA e app nativo para o entregador (necessário para GPS em segundo plano). Código versionado em repositório privado no GitHub.</p>
+</section>
+
+<section class="card">
+  <h2><span class="n">04</span>Escopo por fases</h2>
+  <p class="lead">A Fase 1 já coloca a loja vendendo. Cada fase é entregue, homologada e aceita antes da seguinte começar.</p>
+  <div class="phases">
+    <article class="phase">
+      <header><h3>Fase 1. MVP de vendas</h3><span class="tag">240 h · 8 semanas</span></header>
+      <ul>
+        <li>Telas 1 a 4: escolha do gelo, endereço, cliente, conferência e confirmação</li>
+        <li>Identificação PF/PJ por CPF/CNPJ, cadastro com senha e login com Google</li>
+        <li>Endereço por CEP ou localização atual, validação de área e desvio para WhatsApp</li>
+        <li>Pagamento por Pix e cartão de crédito, com tokenização e confirmação automática</li>
+        <li>Parcelamento em 3x sem juros acima de R$ 600,00</li>
+        <li>Disponibilidade diária em kg, reserva por pedido e bloqueio contra sobrevenda</li>
+        <li>Data, janela manhã/tarde e entrega urgente com taxa</li>
+        <li>Ticket do pedido com preço gravado</li>
+        <li>Backoffice: preço por kg, capacidade diária, pedidos, clientes e pagamentos</li>
+        <li>Registro de consentimentos LGPD e marketing</li>
+        <li>Identidade visual, PWA, favicon e ícones</li>
+        <li>Base multiempresa preparada para revenda futura</li>
+      </ul>
+    </article>
+    <article class="phase">
+      <header><h3>Fase 2. Operação de entregas</h3><span class="tag">170 h · 6 semanas</span></header>
+      <ul>
+        <li>Central de entregas por data e janela, urgentes em destaque</li>
+        <li>Roteirização multi-paradas com abertura no Google Maps ou Waze</li>
+        <li>App do entregador: rota do dia, observações e botão ENTREGA EFETUADA com data, hora e GPS</li>
+        <li>Rastreamento do entregador e ETA para o cliente, encerrado após a entrega</li>
+        <li>WhatsApp oficial (API da Meta) nos 4 eventos e área Mensagens no app</li>
+        <li>Backoffice: rotas, entregadores e histórico de mensagens</li>
+      </ul>
+    </article>
+    <article class="phase">
+      <header><h3>Fase 3. Complementos</h3><span class="tag">140 h · 5 semanas</span></header>
+      <ul>
+        <li>Compra recorrente com cobrança mensal no cartão, sem parcelar o período futuro</li>
+        <li>Boleto para PJ</li>
+        <li>Locação de recipientes com estoque, dias, valor e resgate</li>
+        <li>Emissão de NF-e/NFC-e sob demanda</li>
+        <li>Integração com Agendor CRM</li>
+        <li>Validação de CPF/CNPJ por serviço autorizado</li>
+        <li>Integração com o sistema de estoque, se houver API</li>
+        <li>Cancelamento, reagendamento e ressarcimento</li>
+      </ul>
+    </article>
+    <article class="phase muted">
+      <header><h3>Fase futura. Revenda</h3><span class="tag">sob consulta</span></header>
+      <p>Painel para cadastrar outros distribuidores, marca própria por empresa e cobrança da assinatura SaaS. Estimativa atual de 140 h, orçada quando a revenda virar prioridade.</p>
+      <p style="margin:0"><strong>Opcional:</strong> cartão de débito, conforme demanda (20 h).</p>
+    </article>
+  </div>
+</section>
+
+<section class="card">
+  <h2><span class="n">05</span>Metodologia de trabalho</h2>
+  <p class="lead">O desenvolvimento segue ciclos quinzenais, com uma demonstração funcionando ao fim de cada ciclo.</p>
+  <ol class="steps">
+    <li><strong>Kickoff da fase:</strong> validação do escopo, definição de fornecedores e entrega dos acessos pela Nikiti.</li>
+    <li><strong>Ciclos de 2 semanas:</strong> a Nikiti acompanha a evolução em um ambiente de testes e aprova cada entrega parcial.</li>
+    <li><strong>Homologação:</strong> a Nikiti testa a fase completa por até 10 dias úteis, usando os critérios de aceite do item 19 da especificação.</li>
+    <li><strong>Ajustes e aceite:</strong> correção dos pontos apontados e assinatura do termo de aceite.</li>
+    <li><strong>Implantação:</strong> publicação em produção, treinamento da equipe e início da garantia.</li>
+  </ol>
+  <p class="note">Um canal único de comunicação concentra as decisões. Mudanças de escopo são orçadas à parte, com o mesmo valor-hora, e só entram após aprovação por escrito.</p>
+</section>
+
+<section class="card">
+  <h2><span class="n">06</span>Cronograma</h2>
+  <p class="lead">A loja entra no ar na semana 8 e a operação completa fica pronta na semana 19.</p>
+  <figure>
+    <svg viewBox="0 0 760 300" role="img" aria-label="Cronograma de 19 semanas" font-family="Inter,system-ui,sans-serif" font-size="13">
+      <text x="24" y="34" font-size="15" font-weight="700" fill="#0B1530">Loja vendendo na semana 8, operação completa na semana 19</text>
+      <rect x="24" y="72" width="284" height="88" rx="8" fill="#EAF0FF" stroke="#1E5BFF" stroke-width="1.5"/>
+      <text x="40" y="96" font-weight="600" fill="#0B1530">Fase 1. MVP de vendas</text><text x="40" y="112" font-size="11.5" fill="#6B7590">8 semanas</text><text x="40" y="132" font-size="11.5" fill="#0B1530">Loja, Pix e crédito, estoque</text><text x="40" y="148" font-size="11.5" fill="#0B1530">Backoffice básico</text>
+      <rect x="316" y="72" width="211" height="88" rx="8" fill="#fff" stroke="#C9CFDC"/>
+      <text x="332" y="96" font-weight="600" fill="#0B1530">Fase 2. Operação</text><text x="332" y="112" font-size="11.5" fill="#6B7590">6 semanas</text><text x="332" y="132" font-size="11.5" fill="#0B1530">App do entregador, rotas</text><text x="332" y="148" font-size="11.5" fill="#0B1530">Rastreamento, WhatsApp</text>
+      <rect x="535" y="72" width="177" height="88" rx="8" fill="#fff" stroke="#C9CFDC"/>
+      <text x="551" y="96" font-weight="600" fill="#0B1530">Fase 3. Complementos</text><text x="551" y="112" font-size="11.5" fill="#6B7590">5 semanas</text><text x="551" y="132" font-size="11.5" fill="#0B1530">Recorrência e boleto</text><text x="551" y="148" font-size="11.5" fill="#0B1530">NF-e, CRM, recipientes</text>
+      <line x1="24" x2="712" y1="192" y2="192" stroke="#E3E7EF" stroke-width="2"/>
+      <circle cx="24" cy="192" r="6" fill="#9AA3B8"/>
+      <path d="M312 183l9 9l-9 9l-9 -9z" fill="#FF7200"/><path d="M531 183l9 9l-9 9l-9 -9z" fill="#9AA3B8"/><path d="M703 183l9 9l-9 9l-9 -9z" fill="#9AA3B8"/>
+      <g font-size="11.5">
+        <text x="24" y="222" font-weight="600" fill="#0B1530">Kickoff</text><text x="24" y="238" fill="#6B7590">Semana 0</text>
+        <text x="312" y="222" text-anchor="middle" font-weight="600" fill="#0B1530">Aceite Fase 1</text><text x="312" y="238" text-anchor="middle" fill="#6B7590">Semana 8, loja no ar</text>
+        <text x="531" y="222" text-anchor="middle" font-weight="600" fill="#0B1530">Aceite Fase 2</text><text x="531" y="238" text-anchor="middle" fill="#6B7590">Semana 14</text>
+        <text x="712" y="222" text-anchor="end" font-weight="600" fill="#0B1530">Aceite Fase 3</text><text x="712" y="238" text-anchor="end" fill="#6B7590">Semana 19</text>
+      </g>
+      <text x="24" y="280" font-size="11.5" fill="#6B7590">Cada aceite inclui até 10 dias úteis de homologação pela Nikiti</text>
+    </svg>
+    <figcaption>Os prazos contam a partir do pagamento da entrada e do envio dos acessos e materiais pela Nikiti.</figcaption>
+  </figure>
+</section>
+
+<section class="card">
+  <h2><span class="n">07</span>Investimento</h2>
+  <p class="lead">As Fases 1 a 3 custam R$ 82.500 no Modelo A ou R$ 45.375 no Modelo B. A diferença está em quem fica dono da plataforma revendável.</p>
+  <div class="ref"><strong>Referência de mercado.</strong> Em 2026, a hora de um desenvolvedor full stack sênior freelancer fica entre R$ 200 e R$ 400, e a de mobile sênior entre R$ 220 e R$ 450 (<a href="https://geracontratos.com.br/recursos/tabela-valores-servicos-profissionais" target="_blank" rel="noopener">tabela de referência 2026</a>). No Rio de Janeiro, freelancers de aplicativos cobram de R$ 80 a R$ 250 por hora (<a href="https://www.cronoshare.com.br/quanto-custa/desenvolver-app" target="_blank" rel="noopener">Cronoshare</a>). Esta proposta usa R$ 150 por hora, abaixo da faixa sênior.</div>
+  <div class="tbl"><table>
+    <thead><tr><th>Fase</th><th class="num">Horas</th><th class="num">Modelo A</th><th class="num">Modelo B</th></tr></thead>
+    <tbody>
+      <tr><td>Fase 1. MVP de vendas</td><td class="num">240</td><td class="num">R$ 36.000</td><td class="num">R$ 19.800</td></tr>
+      <tr><td>Fase 2. Operação de entregas</td><td class="num">170</td><td class="num">R$ 25.500</td><td class="num">R$ 14.025</td></tr>
+      <tr><td>Fase 3. Complementos</td><td class="num">140</td><td class="num">R$ 21.000</td><td class="num">R$ 11.550</td></tr>
+      <tr class="total"><td>Total Fases 1 a 3</td><td class="num">550</td><td class="num">R$ 82.500</td><td class="num">R$ 45.375</td></tr>
+      <tr><td>Manutenção mensal, após a Fase 1 (até 15 h/mês)</td><td class="num"></td><td class="num">R$ 2.500</td><td class="num">R$ 1.500</td></tr>
+      <tr><td>Opcional: cartão de débito</td><td class="num">20</td><td class="num">R$ 3.000</td><td class="num">R$ 1.650</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="models">
+    <div class="model">
+      <span class="tag">Modelo A</span>
+      <div class="price">R$ 82.500 <small>Fases 1 a 3</small></div>
+      <h3>Plataforma da Nikiti</h3>
+      <ul>
+        <li>A Nikiti paga o desenvolvimento integral e recebe código, banco de dados e direitos de uso e exploração.</li>
+        <li>A Nikiti pode revender a plataforma a outros distribuidores por conta própria.</li>
+        <li>A fase de revenda, quando contratada, segue o mesmo valor-hora.</li>
+      </ul>
+    </div>
+    <div class="model b">
+      <span class="tag">Modelo B · 45% de desconto</span>
+      <div class="price">R$ 45.375 <small>Fases 1 a 3</small></div>
+      <h3>Plataforma AlphaOps, Nikiti sócia comercial</h3>
+      <ul>
+        <li>A plataforma pertence à AlphaOps, que assume o custo e o risco de transformá-la em produto.</li>
+        <li>A Nikiti usa sem mensalidade de licença, pagando apenas manutenção e custos de terceiros.</li>
+        <li>A Nikiti recebe 15% da receita líquida das assinaturas dos distribuidores que indicar.</li>
+        <li>Exclusividade em Niterói: sem licença para concorrente direto no município por 24 meses.</li>
+        <li>A Nikiti é a cliente piloto e participa da definição do produto.</li>
+      </ul>
+    </div>
+  </div>
+  <p class="note" style="margin-top:14px">Nos dois modelos, a Nikiti é dona dos seus dados e pode exportá-los a qualquer momento.</p>
+</section>
+
+<section class="card">
+  <h2><span class="n">08</span>Custos de terceiros</h2>
+  <p class="lead">Serviços externos são contratados em nome da Nikiti e pagos diretamente aos fornecedores, fora dos valores acima.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>Serviço</th><th>Forma de cobrança</th></tr></thead>
+    <tbody>
+      <tr><td>Hospedagem e banco de dados</td><td>Mensal, estimativa de R$ 150 a R$ 400</td></tr>
+      <tr><td>Gateway de pagamento</td><td>Taxa por transação de Pix, cartão e boleto</td></tr>
+      <tr><td>Google Maps (mapas, endereços e rotas)</td><td>Por uso, com faixa gratuita mensal</td></tr>
+      <tr><td>WhatsApp oficial (Meta)</td><td>Por mensagem enviada, conforme tabela da Meta</td></tr>
+      <tr><td>Emissão de NF-e/NFC-e</td><td>Por nota ou plano mensal do emissor</td></tr>
+      <tr><td>Validação de CPF</td><td>Por consulta</td></tr>
+      <tr><td>Conta de desenvolvedor Apple</td><td>US$ 99 por ano</td></tr>
+      <tr><td>Conta de desenvolvedor Google Play</td><td>US$ 25, pagamento único</td></tr>
+    </tbody>
+  </table></div>
+  <p class="note">Valores aproximados, dependem do volume. A AlphaOps indica os fornecedores na Fase 1, com comparação de custos, e a Nikiti escolhe.</p>
+</section>
+
+<section class="card">
+  <h2><span class="n">09</span>Condições comerciais</h2>
+  <h3>Pagamento por fase</h3>
+  <div class="tbl"><table>
+    <thead><tr><th>Marco</th><th class="num">Percentual</th></tr></thead>
+    <tbody>
+      <tr><td>Assinatura da fase</td><td class="num">40%</td></tr>
+      <tr><td>Entrega para homologação</td><td class="num">30%</td></tr>
+      <tr><td>Aceite final</td><td class="num">30%</td></tr>
+    </tbody>
+  </table></div>
+  <p>Pagamento por Pix ou transferência, com nota fiscal emitida pela AlphaOps. A manutenção mensal começa no mês seguinte à implantação da Fase 1.</p>
+
+  <h3>Qualidade, segurança e garantia</h3>
+  <ul>
+    <li>Código em repositório privado, com documentação técnica e histórico de versões</li>
+    <li>Testes automatizados nos fluxos críticos: pagamento, estoque e reserva</li>
+    <li>Ambiente de homologação separado da produção</li>
+    <li>Dados de cartão apenas tokenizados pelo gateway, sem armazenamento local</li>
+    <li>Chaves e credenciais protegidas no servidor, acesso por perfil no backoffice</li>
+    <li>Registro de consentimentos conforme a LGPD</li>
+    <li>Garantia de 90 dias para correção de defeitos após o aceite de cada fase</li>
+  </ul>
+
+  <h3>Responsabilidades da Nikiti</h3>
+  <ul>
+    <li>Indicar um responsável com poder de decisão sobre o projeto</li>
+    <li>Abrir as contas de gateway, Meta (WhatsApp), Google, emissor de NF-e e lojas de apps</li>
+    <li>Fornecer preços, regras comerciais, área de cobertura, logomarca e mascote em alta resolução</li>
+    <li>Homologar cada fase em até 10 dias úteis</li>
+  </ul>
+
+  <h3>Fora do escopo</h3>
+  <ul>
+    <li>Produção de fotos, textos e novas artes além da identidade visual existente</li>
+    <li>Fase de revenda e cartão de débito, salvo contratação</li>
+    <li>Integração com sistema de estoque sem API disponível</li>
+    <li>Custos de terceiros listados nesta proposta</li>
+  </ul>
+</section>
+
+<section class="card cta">
+  <h2>Próximos passos</h2>
+  <ol class="steps">
+    <li>Escolha do modelo comercial (A ou B)</li>
+    <li>Assinatura do contrato e pagamento da entrada da Fase 1</li>
+    <li>Kickoff em até 5 dias úteis após a assinatura</li>
+  </ol>
+  <a class="btn" href="mailto:andre@alphaops.cloud?subject=Proposta%20Nikiti%20On%20Ice">Responder por e-mail</a>
+  <a class="btn ghost" href="javascript:window.print()">Salvar em PDF</a>
+</section>
+
+</main>
+
+<footer class="wrap">
+  AlphaOps · <a href="https://alphaops.cloud">alphaops.cloud</a> · andre@alphaops.cloud<br>
+  Proposta válida até 08/11/2026. Documento confidencial, destinado à Nikiti On Ice.
+</footer>
+
+</body>
+</html>

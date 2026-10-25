@@ -1,14 +1,19 @@
 /** @type {import('next').NextConfig} */
+// Propostas privadas: HTML estático em public/<cliente>/index.html, fora do índice de busca.
+const PROPOSTAS = ['imports-company', 'nikiti']
+
 const nextConfig = {
   compress: true,
   poweredByHeader: false,
-  // Propostas privadas: HTML estático em public/<cliente>/index.html, fora do índice de busca.
   async rewrites() {
-    return [{ source: '/imports-company', destination: '/imports-company/index.html' }]
+    return PROPOSTAS.map(slug => ({ source: `/${slug}`, destination: `/${slug}/index.html` }))
   },
   async headers() {
-    return [{ source: '/imports-company/:path*', headers: [{ key: 'X-Robots-Tag', value: 'noindex, nofollow' }] },
-            { source: '/imports-company', headers: [{ key: 'X-Robots-Tag', value: 'noindex, nofollow' }] }]
+    const noindex = [{ key: 'X-Robots-Tag', value: 'noindex, nofollow' }]
+    return PROPOSTAS.flatMap(slug => [
+      { source: `/${slug}/:path*`, headers: noindex },
+      { source: `/${slug}`, headers: noindex },
+    ])
   },
 }
 module.exports = nextConfig
