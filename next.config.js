@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 // Propostas privadas: HTML estático em public/<cliente>/index.html, fora do índice de busca.
-const PROPOSTAS = ['imports-company', 'nikiti']
+const PROPOSTAS = ['imports-company', 'nikiti', 'plataforma-gelo']
 
 const nextConfig = {
   compress: true,
